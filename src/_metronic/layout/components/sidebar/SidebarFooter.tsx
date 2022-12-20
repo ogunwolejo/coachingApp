@@ -14,7 +14,7 @@ const SidebarFooter = () => {
         title='Metronic Docs & Components'
       >
         <span className='btn-label'>Docs & Components</span>
-        <KTSVG path='/media/icons/duotune/general/gen005.svg' className='btn-icon svg-icon-2 m-0' />
+        {/*<KTSVG path='/media/icons/duotune/general/gen005.svg' className='btn-icon svg-icon-2 m-0' />*/}
       </a>
     </div>
   )

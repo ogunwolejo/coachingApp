@@ -44,3 +44,4 @@ if (container) {
     </QueryClientProvider>
   )
 }
+//"homepage": "/metronic8/react/demo1",

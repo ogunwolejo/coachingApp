@@ -16,15 +16,15 @@ const SidebarMenuMain = () => {
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
-      <SidebarMenuItem
+      {/*<SidebarMenuItem
         to='/builder'
         icon='/media/icons/duotune/general/gen019.svg'
         title='Layout Builder'
         fontIcon='bi-layers'
-      />
+  />*/}
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Crafted</span>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Records</span>
         </div>
       </div>
       <SidebarMenuItemWithSub
@@ -105,7 +105,7 @@ const SidebarMenuMain = () => {
         icon='/media/icons/duotune/communication/com012.svg'
       >
         <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
-        <SidebarMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />
+        {/*<SidebarMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />*/}
         <SidebarMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
       </SidebarMenuItemWithSub>
       <SidebarMenuItem
@@ -114,18 +114,6 @@ const SidebarMenuMain = () => {
         title='User management'
         fontIcon='bi-layers'
       />
-      <div className='menu-item'>
-        <a
-          target='_blank'
-          className='menu-link'
-          href={process.env.REACT_APP_PREVIEW_DOCS_URL + '/docs/changelog'}
-        >
-          <span className='menu-icon'>
-            <KTSVG path='/media/icons/duotune/general/gen005.svg' className='svg-icon-2' />
-          </span>
-          <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
-        </a>
-      </div>
     </>
   )
 }
