@@ -1,10 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { firebaseApp } from '../../firebase.config';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    sendEmailVerification,
+    
+} from 'firebase/auth';
 
-import { AuthCredentials } from '../../interface/interface';
+import { AuthCredentials, ResetPassword } from '../../interface/interface';
 
-export const loginUserThunk = createAsyncThunk('/loginUser', async (credentials:AuthCredentials, { rejectWithValue }) => {
+
+export const loginUserThunk = createAsyncThunk('auth/loginUser', async (credentials:AuthCredentials, { rejectWithValue }) => {
     try {
         const { email, password } = credentials; 
         const auth = getAuth(firebaseApp);
@@ -14,42 +19,26 @@ export const loginUserThunk = createAsyncThunk('/loginUser', async (credentials:
         console.log(isUserLogin.user);
         return JSON.stringify(isUserLogin.user);
         
-    } catch (error:any) {
-         return rejectWithValue(error.response.data)
+    } catch (error: any) {
+        console.log(error.message);
+         return rejectWithValue(error.message)
     }
 })
 
 
-export const registerUserThunk = createAsyncThunk('/signupUser', async (credentials: AuthCredentials, { rejectWithValue }) => {
+export const registerUserThunk = createAsyncThunk('auth/signupUser', async (credentials: AuthCredentials, { rejectWithValue }) => {
     try {
         const { email, password } = credentials;
         const auth = getAuth(firebaseApp);
 
         const registerUser = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(registerUser.user);
+        //@ts-ignore
+        await sendEmailVerification(auth.currentUser);
 
         return JSON.stringify(registerUser.user);
-
-    } catch (error:any) {
-        return rejectWithValue(error.response.data);
-    }
-})
-
-export const googleAuthProvider = createAsyncThunk('/googleAuth', async (data:any, {rejectWithValue}) => {
-    try {
-        const provider = new GoogleAuthProvider();
-        const auth = getAuth(firebaseApp);
-
-        const result = await signInWithPopup(auth, provider);
-        //
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-
-        console.log({ main:result.user, credential, token });
-
-        return JSON.stringify(result.user);
 
     } catch (error:any) {
         return rejectWithValue(error.message);
     }
 })
+

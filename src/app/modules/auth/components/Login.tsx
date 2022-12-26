@@ -2,11 +2,18 @@
 import {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
-import {getUserByToken, login} from '../core/_requests'
+//import {getUserByToken, login} from '../core/_requests'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {useAuth} from '../core/Auth'
+import { loginUserThunk } from '../../../../store/redux/thunk'
+import { useDispatch, useSelector } from 'react-redux'
+import { AuthCredentials } from '../../../../interface/interface'
+import { setUser } from '../../../../store/redux/auth.slice'
+import { GoogleAuthProvider, signInWithPopup, getAuth, FacebookAuthProvider } from 'firebase/auth'
+import { firebaseApp } from '../../../../firebase.config'
+import { cacheAuthHandler } from '../../../util/caching.auth'
+
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -21,32 +28,87 @@ const loginSchema = Yup.object().shape({
 })
 
 const initialValues = {
-  email: 'admin@demo.com',
-  password: 'demo',
+  email: '',
+  password: '',
 }
 
 
 export function Login() {
-  const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { auth } = useSelector((store:any) => ({
+    auth:store.authReducer
+  }))
+
+  let { loading, error } = auth;
+
+  const googleAuthProviderHandler = async () => {
+    try {
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth(firebaseApp);
+
+        const result = await signInWithPopup(auth, provider);
+        
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken; // google token to get more info from the google API
+
+      //@ts-ignore
+      cacheAuthHandler(result.user?.stsTokenManager);
+      
+      dispatch(setUser({ payload:result.user}));
+
+
+    } catch (error:any) {
+      console.log(error.message);
+      return error;
+    }
+  }
+
+
+  const facebookProviderHandler = async () => {
+    try {
+      const provider = new FacebookAuthProvider();
+      const auth = getAuth(firebaseApp);
+      provider.setCustomParameters({
+        'display': 'popup'
+      });
+
+      const result = await signInWithPopup(auth, provider);
+      const credential = FacebookAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken; // facebook token to get more info from the google API 
+
+      //@ts-ignore
+      cacheAuthHandler(result.user?.stsTokenManager);
+      
+      dispatch(setUser({ payload:result.user}));
+
+      return result.user;
+    } catch (error) {
+      
+    }
+  }
+  
 
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
-      try {
-        const {data: auth} = await login(values.email, values.password)
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
-      } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The login details are incorrect')
-        setSubmitting(false)
-        setLoading(false)
+      const credentials: AuthCredentials = {
+        email: values.email,
+        password: values.password
       }
+
+      try {
+        //@ts-ignore
+        await dispatch(loginUserThunk(credentials));
+
+        navigate('/dashboard');
+
+      } catch (error) {
+        console.log('loginError', error);
+      }
+
     },
   })
 
@@ -70,7 +132,7 @@ export function Login() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            href='#'
+            onClick={googleAuthProviderHandler}
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
           >
             <img
@@ -88,7 +150,7 @@ export function Login() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            href='#'
+            onClick={facebookProviderHandler}
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
           >
             <img

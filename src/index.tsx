@@ -20,7 +20,7 @@ import { AppRoutes } from './app/routing/AppRoutes'
 import { reduxStore } from './store/redux'
 import { Provider } from 'react-redux';
 
-import { AuthProvider, setupAxios } from './app/modules/auth'
+//import { AuthProvider  } from './app/modules/auth'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.
@@ -32,7 +32,7 @@ import { AuthProvider, setupAxios } from './app/modules/auth'
  *
  * @see https://github.com/axios/axios#interceptors
  */
-setupAxios(axios)
+
 Chart.register(...registerables)
 
 const queryClient = new QueryClient()
@@ -42,9 +42,7 @@ if (container) {
     <Provider store={reduxStore}>
       <QueryClientProvider client={queryClient}>
         <MetronicI18nProvider>
-          <AuthProvider>
             <AppRoutes />
-          </AuthProvider>
         </MetronicI18nProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

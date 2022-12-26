@@ -9,8 +9,10 @@ import {FC} from 'react'
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
-import {Logout, AuthPage, useAuth} from '../modules/auth'
-import {App} from '../App'
+import {Logout, AuthPage } from '../modules/auth'
+import { App } from '../App'
+import { useSelector } from 'react-redux'
+import _ from 'lodash';
 
 /**
  * Base URL of the website.
@@ -20,7 +22,15 @@ import {App} from '../App'
 const {PUBLIC_URL} = process.env
 
 const AppRoutes: FC = () => {
-  const {currentUser} = useAuth()
+  const {currentUser} = useSelector((store:any) => ({
+    currentUser:store.authReducer.currentUser
+  }))
+
+  //const isCurrentUser:boolean = _.isEmpty(currentUser);
+
+  //console.log(currentUser);
+
+
   return (
     <BrowserRouter /*basename={PUBLIC_URL}*/>
       <Routes>
@@ -30,7 +40,7 @@ const AppRoutes: FC = () => {
           {currentUser ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
-              <Route index element={<Navigate to='/dashboard' />} />
+              {<Route index element={<Navigate to='/dashboard' />} />}
             </>
           ) : (
             <>

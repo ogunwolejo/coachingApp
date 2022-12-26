@@ -4,11 +4,18 @@ import {useState, useEffect} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {getUserByToken, register} from '../core/_requests'
 import {Link} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
-import {useAuth} from '../core/Auth'
+import { registerUserThunk } from '../../../../store/redux/thunk'
+import { useDispatch, useSelector } from 'react-redux'
+import { AuthCredentials } from '../../../../interface/interface'
+import { useNavigate } from 'react-router-dom'
+
+import { GoogleAuthProvider, signInWithPopup, getAuth, FacebookAuthProvider } from 'firebase/auth'
+import { firebaseApp } from '../../../../firebase.config'
+import { cacheAuthHandler } from '../../../util/caching.auth'
+import { setUser } from '../../../../store/redux/auth.slice'
 
 const initialValues = {
   firstname: '',
@@ -47,30 +54,77 @@ const registrationSchema = Yup.object().shape({
 })
 
 export function Registration() {
-  const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+   const { auth } = useSelector((store:any) => ({
+    auth:store.authReducer
+   }))
+  
+  const navigate = useNavigate();
+  
+  const dispatch = useDispatch();
+
+  let { loading, error, currentUser } = auth;
+
+  const googleAuthProviderHandler = async () => {
+    try {
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth(firebaseApp);
+
+        const result = await signInWithPopup(auth, provider);
+        //
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+      
+        //@ts-ignore
+      cacheAuthHandler(result.user?.stsTokenManager);
+      
+      dispatch(setUser({ payload:result.user}));
+
+    } catch (error:any) {
+      console.log(error);
+      return error;
+    }
+  }
+
+
+  const facebookProviderHandler = async () => {
+    try {
+      const provider = new FacebookAuthProvider();
+      const auth = getAuth(firebaseApp);
+      provider.setCustomParameters({
+        'display': 'popup'
+      });
+
+      const result = await signInWithPopup(auth, provider);
+      const credential = FacebookAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken; // facebook token to get more info from the google API 
+      
+      //@ts-ignore
+      cacheAuthHandler(result.user?.stsTokenManager);
+      
+      dispatch(setUser({ payload:result.user}));
+    } catch (error) {
+      
+    }
+  }
+
+
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
       try {
-        const {data: auth} = await register(
-          values.email,
-          values.firstname,
-          values.lastname,
-          values.password,
-          values.changepassword
-        )
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
+        const credential: AuthCredentials = {
+          email: values.email,
+          password:values.password
+        };
+        
+        //@ts-ignore
+        const reg = await dispatch(registerUserThunk(credential));
+        console.log(reg);
+        navigate('/auth/login');
+
       } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The registration details is incorrect')
-        setSubmitting(false)
-        setLoading(false)
+        console.log("registerationError", error);
       }
     },
   })
@@ -102,8 +156,9 @@ export function Registration() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            href='#'
+            //href='javascript::void(0)'
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
+            onClick={googleAuthProviderHandler}
           >
             <img
               alt='Logo'
@@ -120,20 +175,20 @@ export function Registration() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            href='#'
+            onClick={facebookProviderHandler}
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
           >
             <img
               alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black.svg')}
+              src={toAbsoluteUrl('/media/svg/brand-logos/facebook-4.svg')}
               className='theme-light-show h-15px me-3'
             />
             <img
               alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black-dark.svg')}
+              src={toAbsoluteUrl('/media/svg/brand-logos/facebook-1.svg')}
               className='theme-dark-show h-15px me-3'
             />
-            Sign in with Apple
+            Sign in with Facebook
           </a>
           {/* end::Google link */}
         </div>
