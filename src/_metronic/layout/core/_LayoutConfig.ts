@@ -87,6 +87,7 @@ export const DefaultConfig: ILayout = {
       filterButton: true,
       daterangepickerButton: false,
       primaryButton: true,
+      secondaryButton:true,
       primaryButtonLabel: 'Create',
       primaryButtonModal: 'create-app',
     },

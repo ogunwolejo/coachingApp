@@ -58,26 +58,6 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
             about driving and keep you focused on the overall structure of your post
           </div>
           {/* end::Text */}
-
-          {/* begin::Toolbar */}
-          <div className='d-flex align-items-center mb-5'>
-            <a
-              href='#'
-              className='btn btn-sm btn-light btn-color-muted btn-active-light-success px-4 py-2 me-4'
-            >
-              <KTSVG path='/media/icons/duotune/communication/com012.svg' className='svg-icon-2' />
-              12
-            </a>
-
-            <a
-              href='#'
-              className='btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2'
-            >
-              <KTSVG path='/media/icons/duotune/general/gen030.svg' className='svg-icon-2' />
-              150
-            </a>
-          </div>
-          {/* end::Toolbar */}
         </div>
         {/* end::Post */}
 
@@ -100,10 +80,6 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
                 </a>
 
                 <span className='text-gray-400 fw-semibold fs-7'>1 day</span>
-
-                <a href='#' className='ms-auto text-gray-400 text-hover-primary fw-semibold fs-7'>
-                  Reply
-                </a>
               </div>
               {/* end::Info */}
 
@@ -135,10 +111,6 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
                 </a>
 
                 <span className='text-gray-400 fw-semibold fs-7'>2 days</span>
-
-                <a href='#' className='ms-auto text-gray-400 text-hover-primary fw-semibold fs-7'>
-                  Reply
-                </a>
               </div>
               {/* end::Info */}
 
@@ -161,7 +133,7 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
         {/* begin::Reply input */}
         <form className='position-relative mb-6'>
           <textarea
-            className='form-control border-0 p-0 pe-10 resize-none min-h-25px'
+            className='form-control border-0 p-1 pe-10 resize-none min-h-50px'
             data-kt-autosize='true'
             rows={1}
             placeholder='Reply..'
@@ -173,10 +145,6 @@ const FeedsWidget3: React.FC<Props> = ({className}) => {
                 path='/media/icons/duotune/communication/com012.svg'
                 className='svg-icon-3 mb-3'
               />
-            </span>
-
-            <span className='btn btn-icon btn-sm btn-active-color-primary ps-0'>
-              <KTSVG path='/media/icons/duotune/general/gen018.svg' className='svg-icon-2 mb-3' />
             </span>
           </div>
         </form>

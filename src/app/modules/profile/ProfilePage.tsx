@@ -1,16 +1,15 @@
 import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {Overview} from './components/Overview'
-import {Projects} from './components/Projects'
-import {Campaigns} from './components/Campaigns'
+import {Discussion} from './components/Discussion'
+import {ActionPoints} from './components/ActionPoints'
 import {Documents} from './components/Documents'
 import {Connections} from './components/Connections'
 import {ProfileHeader} from './ProfileHeader'
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Profile',
-    path: '/crafted/pages/profile/overview',
+    title: 'My View',
+    path: '/view/discussion',
     isSeparator: false,
     isActive: false,
   },
@@ -33,29 +32,20 @@ const ProfilePage = () => (
       }
     >
       <Route
-        path='overview'
+        path='discussion'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Overview</PageTitle>
-            <Overview />
+            <PageTitle breadcrumbs={profileBreadCrumbs}> Discussion</PageTitle>
+            <Discussion />
           </>
         }
       />
       <Route
-        path='projects'
+        path='action-points'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Projects</PageTitle>
-            <Projects />
-          </>
-        }
-      />
-      <Route
-        path='campaigns'
-        element={
-          <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Campaigns</PageTitle>
-            <Campaigns />
+            <PageTitle breadcrumbs={profileBreadCrumbs}>Action Point</PageTitle>
+            <ActionPoints />
           </>
         }
       />
@@ -77,7 +67,7 @@ const ProfilePage = () => (
           </>
         }
       />
-      <Route index element={<Navigate to='/crafted/pages/profile/overview' />} />
+      <Route index element={<Navigate to='/view/discussion' />} />
     </Route>
   </Routes>
 )

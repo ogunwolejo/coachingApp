@@ -3,6 +3,7 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
+import {ClientDashboardWrapper} from '../pages/dashboard/ClientDashboardWrapper'
 import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
@@ -16,25 +17,25 @@ const PrivateRoutes = () => {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
 
+  let role: number = 0 // 0 - client 1 - coach
+  const isClient: boolean = role === 0 ? true : false
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
-        <Route path='/dashboard' element={<DashboardWrapper />} />
+        {isClient ? (
+          <Route path='/dashboard' element={<ClientDashboardWrapper />} />
+        ) : (
+          <Route path='/dashboard' element={<DashboardWrapper />} />
+        )}
+
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
         {/* Lazy Modules */}
-        <Route
-          path='crafted/pages/profile/*'
-          element={
-            <SuspensedView>
-              <ProfilePage />
-            </SuspensedView>
-          }
-        />
-        <Route
+         <Route
           path='crafted/pages/wizards/*'
           element={
             <SuspensedView>
@@ -42,6 +43,15 @@ const PrivateRoutes = () => {
             </SuspensedView>
           }
         />
+        <Route
+          path='/view/*'
+          element={
+            <SuspensedView>
+              <ProfilePage />
+            </SuspensedView>
+          }
+        />
+       
         <Route
           path='crafted/widgets/*'
           element={

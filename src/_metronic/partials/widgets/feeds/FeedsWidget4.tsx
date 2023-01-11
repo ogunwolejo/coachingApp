@@ -27,6 +27,7 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
               <a href='#' className='text-gray-800 text-hover-primary fs-6 fw-bold'>
                 Carles Nilson
               </a>
+              <span className='text-gray-400 fw-semibold'>PHP, SQLite, Artisan CLI</span>
               <span className='text-gray-400 fw-semibold'>Last week at 10:00 PM</span>
             </div>
             {/* end::Info */}
@@ -58,26 +59,6 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
             about driving and keep you focused on the overall structure of your post
           </div>
           {/* end::Text */}
-
-          {/* begin::Toolbar */}
-          <div className='d-flex align-items-center mb-5'>
-            <a
-              href='#'
-              className='btn btn-sm btn-light btn-color-muted btn-active-light-success px-4 py-2 me-4'
-            >
-              <KTSVG path='/media/icons/duotune/communication/com012.svg' className='svg-icon-3' />
-              22
-            </a>
-
-            <a
-              href='#'
-              className='btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2'
-            >
-              <KTSVG path='/media/icons/duotune/general/gen030.svg' className='svg-icon-2' />
-              59
-            </a>
-          </div>
-          {/* end::Toolbar */}
         </div>
         {/* end::Post */}
 
@@ -88,22 +69,19 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
         {/* begin::Reply input */}
         <form className='position-relative mb-6'>
           <textarea
-            className='form-control border-0 p-0 pe-10 resize-none min-h-25px'
+            className='form-control border-0 p-1 pe-10 resize-none min-h-50px'
             rows={1}
             placeholder='Reply..'
           ></textarea>
 
           <div className='position-absolute top-0 end-0 me-n5'>
             <span className='btn btn-icon btn-sm btn-active-color-primary pe-0 me-2'>
-              <KTSVG
-                path='/media/icons/duotune/communication/com008.svg'
+               <KTSVG
+                path='/media/icons/duotune/communication/com012.svg'
                 className='svg-icon-3 mb-3'
               />
             </span>
 
-            <span className='btn btn-icon btn-sm btn-active-color-primary ps-0'>
-              <KTSVG path='/media/icons/duotune/general/gen018.svg' className='svg-icon-2 mb-3' />
-            </span>
           </div>
         </form>
         {/* edit::Reply input */}

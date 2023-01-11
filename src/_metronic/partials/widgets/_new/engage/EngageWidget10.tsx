@@ -12,31 +12,31 @@ const EngageWidget10 = ({className}: Props) => (
       className='card-body d-flex flex-column justify-content-between mt-9 bgi-no-repeat bgi-size-cover bgi-position-x-center pb-0'
       style={{
         backgroundPosition: '100% 50%',
-        backgroundImage: `url('${toAbsoluteUrl('/media/stock/900x600/42.png')}')`,
+        //backgroundImage: `url('${toAbsoluteUrl('/media/stock/900x600/42.png')}')`,
       }}
     >
       <div className='mb-10'>
         <div className='fs-2hx fw-bold text-gray-800 text-center mb-13'>
           <span className='me-2'>
-            Try our all new Enviroment with
+            Let's help you grow yor Business
             <br />
             <span className='position-relative d-inline-block text-danger'>
               <Link
                 to='/crafted/pages/profile/overview'
                 className='text-danger
-              opacity-75-hover'
+                opacity-75-hover'
               >
-                Pro Plan
+                Select A Plan 
               </Link>
 
               <span className='position-absolute opacity-15 bottom-0 start-0 border-4 border-danger border-bottom w-100'></span>
             </span>
           </span>
-          for Free
+          
         </div>
 
         <div className='text-center'>
-          <a href='#'>Upgrade Now</a>
+          <a href='#'>Payment History</a>
         </div>
       </div>
       <img

@@ -5,6 +5,7 @@ import {Dropdown1} from '../../content/dropdown/Dropdown1'
 
 type Props = {
   className: string
+  data?:Array<string>
 }
 
 const ListsWidget3: React.FC<Props> = ({className}) => {
@@ -12,7 +13,7 @@ const ListsWidget3: React.FC<Props> = ({className}) => {
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0'>
-        <h3 className='card-title fw-bold text-dark'>Todo</h3>
+        <h3 className='card-title fw-bold text-dark'>Action Points</h3>
         <div className='card-toolbar'>
           {/* begin::Menu */}
           <button

@@ -8,60 +8,49 @@ import {SidebarMenuItem} from './SidebarMenuItem'
 const SidebarMenuMain = () => {
   const intl = useIntl()
 
+  let user:string = "client";
+
   return (
     <>
-      <SidebarMenuItem
+    {/***** the dashboard paths for client mode */}
+      {user === "client" && (
+        <>
+        <SidebarMenuItem
         to='/dashboard'
         icon='/media/icons/duotune/art/art002.svg'
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
-      {/*<SidebarMenuItem
-        to='/builder'
-        icon='/media/icons/duotune/general/gen019.svg'
-        title='Layout Builder'
-        fontIcon='bi-layers'
-  />*/}
+    
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Records</span>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Views</span>
         </div>
       </div>
       <SidebarMenuItemWithSub
         to='/crafted/pages'
-        title='Pages'
+        title='Page'
         fontIcon='bi-archive'
         icon='/media/icons/duotune/general/gen022.svg'
       >
-        <SidebarMenuItemWithSub to='/crafted/pages/profile' title='Profile' hasBullet={true}>
-          <SidebarMenuItem to='/crafted/pages/profile/overview' title='Overview' hasBullet={true} />
-          <SidebarMenuItem to='/crafted/pages/profile/projects' title='Projects' hasBullet={true} />
+        <SidebarMenuItemWithSub to='/view' title='My View' hasBullet={false}>
+          <SidebarMenuItem to='/view/discussion' title='History Of Discussions' hasBullet={true} />
+          <SidebarMenuItem to='/view/action-points' title='Action Points' hasBullet={true} />
           <SidebarMenuItem
-            to='/crafted/pages/profile/campaigns'
-            title='Campaigns'
-            hasBullet={true}
-          />
-          <SidebarMenuItem
-            to='/crafted/pages/profile/documents'
+            to='/view/documents'
             title='Documents'
             hasBullet={true}
           />
           <SidebarMenuItem
-            to='/crafted/pages/profile/connections'
+            to='/view/connections'
             title='Connections'
             hasBullet={true}
           />
         </SidebarMenuItemWithSub>
-
-        <SidebarMenuItemWithSub to='/crafted/pages/wizards' title='Wizards' hasBullet={true}>
-          <SidebarMenuItem
-            to='/crafted/pages/wizards/horizontal'
-            title='Horizontal'
-            hasBullet={true}
-          />
-          <SidebarMenuItem to='/crafted/pages/wizards/vertical' title='Vertical' hasBullet={true} />
-        </SidebarMenuItemWithSub>
       </SidebarMenuItemWithSub>
+
+      <SidebarMenuItem to='/crafted/pages/wizards/vertical' title='Payment' fontIcon="bi-payment" icon='/media/icons/duotune/communication/com006.svg'/>
+
       <SidebarMenuItemWithSub
         to='/crafted/accounts'
         title='Accounts'
@@ -71,7 +60,61 @@ const SidebarMenuMain = () => {
         <SidebarMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
         <SidebarMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
       </SidebarMenuItemWithSub>
+      
+        </>
+      )}
+
+      {/*** the dashboard paths for head coach  */}
+
+
+      {/** general paths for mode */}
+      <div className='menu-item'>
+        <div className='menu-content pt-8 pb-2'>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Chats</span>
+        </div>
+      </div>
       <SidebarMenuItemWithSub
+        to='/apps/chat'
+        title='Chat'
+        fontIcon='bi-chat-left'
+        icon='/media/icons/duotune/communication/com012.svg'
+      >
+        <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
+        {/*<SidebarMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />*/}
+        <SidebarMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
+      </SidebarMenuItemWithSub>
+      <SidebarMenuItem
+        to='/apps/user-management/users'
+        icon='/media/icons/duotune/general/gen051.svg'
+        title='User management'
+        fontIcon='bi-layers'
+      />
+
+    </>
+  )
+}
+
+export {SidebarMenuMain}
+
+
+/***
+ * <SidebarMenuItem
+            to='/view/campaigns'
+            title='Campaigns'
+            hasBullet={true}
+          />
+ * <SidebarMenuItem
+            to='/crafted/pages/wizards/horizontal'
+            title='Horizontal'
+            hasBullet={true}
+          />
+ *   <SidebarMenuItem
+        to='/builder'
+        icon='/media/icons/duotune/general/gen019.svg'
+        title='Layout Builder'
+        fontIcon='bi-layers'
+  />
+ * {<SidebarMenuItemWithSub
         to='/error'
         title='Errors'
         fontIcon='bi-sticky'
@@ -92,30 +135,6 @@ const SidebarMenuMain = () => {
         <SidebarMenuItem to='/crafted/widgets/mixed' title='Mixed' hasBullet={true} />
         <SidebarMenuItem to='/crafted/widgets/tables' title='Tables' hasBullet={true} />
         <SidebarMenuItem to='/crafted/widgets/feeds' title='Feeds' hasBullet={true} />
-      </SidebarMenuItemWithSub>
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Apps</span>
-        </div>
-      </div>
-      <SidebarMenuItemWithSub
-        to='/apps/chat'
-        title='Chat'
-        fontIcon='bi-chat-left'
-        icon='/media/icons/duotune/communication/com012.svg'
-      >
-        <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
-        {/*<SidebarMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />*/}
-        <SidebarMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
-      </SidebarMenuItemWithSub>
-      <SidebarMenuItem
-        to='/apps/user-management/users'
-        icon='/media/icons/duotune/general/gen051.svg'
-        title='User management'
-        fontIcon='bi-layers'
-      />
-    </>
-  )
-}
-
-export {SidebarMenuMain}
+      </SidebarMenuItemWithSub>}
+ * 
+ */

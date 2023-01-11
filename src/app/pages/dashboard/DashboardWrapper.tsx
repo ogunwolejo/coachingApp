@@ -25,10 +25,11 @@ const DashboardPage: FC = () => (
       {/* begin::Col */}
       <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
         <CardsWidget20
-          className='h-md-50 mb-5 mb-xl-10'
-          description='Active Projects'
-          color='#F1416C'
-          img={toAbsoluteUrl('/media/patterns/vector-1.png')}
+         className='h-md-50 mb-5 mb-xl-10'
+          reference='TYS-0001'
+          color='#50CD89'
+          name='Tolu BishopPope'
+          
         />
         <CardsWidget7
           className='h-md-50 mb-5 mb-xl-10'
@@ -117,7 +118,7 @@ const DashboardWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: '.DASHBOARD'})}</PageTitle>
       <DashboardPage />
     </>
   )

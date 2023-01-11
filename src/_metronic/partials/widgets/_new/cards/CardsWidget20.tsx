@@ -1,23 +1,21 @@
 type Props = {
   className: string
-  description: string
+  reference: string
   color: string
-  img: string
+  name?:string
 }
 
-const CardsWidget20 = ({className, description, color, img}: Props) => (
+const CardsWidget20 = ({className, reference, color,  name}: Props) => (
   <div
-    className={`card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end ${className}`}
+    className={`card card-flush bgi-no-repeat  ${className}`}
     style={{
-      backgroundColor: color,
-      backgroundImage: `url('${img}')`,
+      backgroundColor: color
     }}
   >
     <div className='card-header pt-5'>
       <div className='card-title d-flex flex-column'>
-        <span className='fs-2hx fw-bold text-white me-2 lh-1 ls-n2'>69</span>
-
-        <span className='text-white opacity-75 pt-1 fw-semibold fs-6'>{description}</span>
+        <span className='fs-1hx fw-bold text-white me-2 lh-1 ls-n2'>{name}</span>
+        <span className='text-white opacity-50 pt-1 fw-semibold fs-4'>{reference}</span>
       </div>
     </div>
     <div className='card-body d-flex align-items-end pt-0'>

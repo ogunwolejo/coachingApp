@@ -1,46 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Metronic React Demo 1" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"
+    />
+    <title>Metronic Theme | Keenthemes</title>
+    <link rel="shortcut icon" href="%PUBLIC_URL%/media/logos/favicon.ico" />
+    <link rel="stylesheet" id="layout-styles-anchor" href="%PUBLIC_URL%/splash-screen.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Metronic React Demo 1" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
-  <title>Metronic Theme | Keenthemes</title>
-  <link rel="shortcut icon" href="%PUBLIC_URL%/media/logos/favicon.ico" />
-  <link rel="stylesheet" id="layout-styles-anchor" href="%PUBLIC_URL%/splash-screen.css" />
-</head>
+  <body id="kt_body" class="page-loading splash-screen mat-typography">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--begin::Theme mode setup on page load-->
+    <script>
+      if (document.documentElement) {
+        var defaultThemeMode = 'system'
+        //var themeMode = "light";
 
-<body id="kt_body" class="page-loading splash-screen mat-typography">
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <!--begin::Theme mode setup on page load-->
-  <script>
-    if (document.documentElement) {
-      var defaultThemeMode = "system";
-      //var themeMode = "light";
-
-      var themeMode = localStorage.getItem("kt_theme_mode_value");
-      if (!themeMode) {
-        if (defaultThemeMode === "system") {
-          themeMode =
-            window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        } else {
-          themeMode = defaultThemeMode;
+        var themeMode = localStorage.getItem('kt_theme_mode_value')
+        if (!themeMode) {
+          if (defaultThemeMode === 'system') {
+            themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+          } else {
+            themeMode = defaultThemeMode
+          }
         }
+
+        document.documentElement.setAttribute('data-theme', 'light')
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(
+          (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        )
       }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"
+    ></script>
 
-      document.documentElement.setAttribute("data-theme", 'light');
-    }            
-  </script>
-  <!--end::Theme mode setup on page load-->
+    <!--end::Theme mode setup on page load-->
 
-  <div id="root"></div>
-  <div id="splash-screen" class="splash-screen">
-    <img src="%PUBLIC_URL%/media/logos/default-small.svg" alt="Metronic logo" />
-    <span>Loading ...</span>
-  </div>
-  <div id="root-modals"></div>
-</body>
-
+    <div id="root"></div>
+    <div id="splash-screen" class="splash-screen">
+      <img src="%PUBLIC_URL%/media/logos/default-small.svg" alt="Metronic logo" />
+      <span>Loading ...</span>
+    </div>
+    <div id="root-modals"></div>
+  </body>
 </html>

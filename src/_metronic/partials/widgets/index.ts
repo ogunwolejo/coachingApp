@@ -84,6 +84,7 @@ export * from './tiles/TilesWidget5'
 
 // new
 export * from './_new/cards/CardsWidget7'
+export * from './_new/cards/CardsWidget8'
 export * from './_new/cards/CardsWidget17'
 export * from './_new/cards/CardsWidget20'
 
