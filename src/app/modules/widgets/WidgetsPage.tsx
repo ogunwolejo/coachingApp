@@ -1,7 +1,6 @@
 import {Navigate, Route, Routes, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Charts} from './components/Charts'
-import {Feeds} from './components/Feeds'
 import {Lists} from './components/Lists'
 import {Tables} from './components/Tables'
 import {Mixed} from './components/Mixed'
@@ -9,8 +8,8 @@ import {Statistics} from './components/Statistics'
 
 const widgetsBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Widgets',
-    path: '/crafted/widgets/charts',
+    title: 'Stats',
+    path: '/admin/charts',
     isSeparator: false,
     isActive: false,
   },
@@ -35,15 +34,7 @@ const WidgetsPage = () => {
             </>
           }
         />
-        <Route
-          path='feeds'
-          element={
-            <>
-              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Feeds</PageTitle>
-              <Feeds />
-            </>
-          }
-        />
+        
         <Route
           path='lists'
           element={
@@ -80,7 +71,7 @@ const WidgetsPage = () => {
             </>
           }
         />
-        <Route index element={<Navigate to='/crafted/widgets/lists' />} />
+        <Route index element={<Navigate to='/admin/lists' />} />
       </Route>
     </Routes>
   )

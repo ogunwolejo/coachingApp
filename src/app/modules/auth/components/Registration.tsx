@@ -7,15 +7,10 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
-import { registerUserThunk } from '../../../../store/redux/thunk'
+import { registerUserThunk, googleAuthProviderHandlerThunk } from '../../../../store/redux/thunk'
 import { useDispatch, useSelector } from 'react-redux'
 import { AuthCredentials } from '../../../../interface/interface'
 import { useNavigate } from 'react-router-dom'
-
-import { GoogleAuthProvider, signInWithPopup, getAuth, FacebookAuthProvider } from 'firebase/auth'
-import { firebaseApp } from '../../../../firebase.config'
-import { cacheAuthHandler } from '../../../util/caching.auth'
-import { setUser } from '../../../../store/redux/auth.slice'
 
 const initialValues = {
   firstname: '',
@@ -64,47 +59,9 @@ export function Registration() {
 
   let { loading, error, currentUser } = auth;
 
-  const googleAuthProviderHandler = async () => {
-    try {
-        const provider = new GoogleAuthProvider();
-        const auth = getAuth(firebaseApp);
-
-        const result = await signInWithPopup(auth, provider);
-        //
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-      
-        //@ts-ignore
-      cacheAuthHandler(result.user?.stsTokenManager);
-      
-      dispatch(setUser({ payload:result.user}));
-
-    } catch (error:any) {
-      console.log(error);
-      return error;
-    }
-  }
 
 
   const facebookProviderHandler = async () => {
-    try {
-      const provider = new FacebookAuthProvider();
-      const auth = getAuth(firebaseApp);
-      provider.setCustomParameters({
-        'display': 'popup'
-      });
-
-      const result = await signInWithPopup(auth, provider);
-      const credential = FacebookAuthProvider.credentialFromResult(result);
-      const accessToken = credential?.accessToken; // facebook token to get more info from the google API 
-      
-      //@ts-ignore
-      cacheAuthHandler(result.user?.stsTokenManager);
-      
-      dispatch(setUser({ payload:result.user}));
-    } catch (error) {
-      
-    }
   }
 
 
@@ -115,16 +72,18 @@ export function Registration() {
       try {
         const credential: AuthCredentials = {
           email: values.email,
-          password:values.password
+          password:values.password,
+          firstName:values.firstname,
+          lastName:values.lastname
         };
         
         //@ts-ignore
-        const reg = await dispatch(registerUserThunk(credential));
-        console.log(reg);
-        navigate('/auth/login');
+        await dispatch(registerUserThunk(credential));
+        //console.log(reg);
+        navigate('/auth/check-email');
 
       } catch (error) {
-        console.log("registerationError", error);
+        return null;
       }
     },
   })
@@ -158,7 +117,10 @@ export function Registration() {
           <a
             //href='javascript::void(0)'
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-            onClick={googleAuthProviderHandler}
+               onClick={async() => {
+                //@ts-ignore
+                await dispatch(googleAuthProviderHandlerThunk({})) 
+            }}
           >
             <img
               alt='Logo'

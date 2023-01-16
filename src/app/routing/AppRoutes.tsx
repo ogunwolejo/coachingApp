@@ -28,7 +28,7 @@ const AppRoutes: FC = () => {
 
   //const isCurrentUser:boolean = _.isEmpty(currentUser);
 
-  //console.log(currentUser);
+  console.log(currentUser);
 
 
   return (

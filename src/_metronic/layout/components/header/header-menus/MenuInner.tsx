@@ -8,11 +8,6 @@ export function MenuInner() {
   return (
     <>
       <MenuItem title={intl.formatMessage({id: 'MENU.DASHBOARD'})} to='/dashboard' />
-      <MenuItem
-        icon='/media/icons/duotune/general/gen051.svg'
-        to='/apps/user-management/users'
-        title='User management'
-      />
       <MenuInnerWithSub title='Chat' to='/apps' menuPlacement='bottom-start' menuTrigger='click'>
         {/* PAGES */}
         <MenuInnerWithSub

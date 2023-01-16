@@ -6,14 +6,9 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
 //import {getUserByToken, login} from '../core/_requests'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import { loginUserThunk } from '../../../../store/redux/thunk'
-import { useDispatch, useSelector } from 'react-redux'
-import { AuthCredentials } from '../../../../interface/interface'
-import { setUser } from '../../../../store/redux/auth.slice'
-import { GoogleAuthProvider, signInWithPopup, getAuth, FacebookAuthProvider } from 'firebase/auth'
-import { firebaseApp } from '../../../../firebase.config'
-import { cacheAuthHandler } from '../../../util/caching.auth'
-
+import {loginUserThunk, googleAuthProviderHandlerThunk} from '../../../../store/redux/thunk'
+import {useDispatch, useSelector} from 'react-redux'
+import {LoginCredentials} from '../../../../interface/interface'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -32,83 +27,35 @@ const initialValues = {
   password: '',
 }
 
-
 export function Login() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { auth } = useSelector((store:any) => ({
-    auth:store.authReducer
+  const {auth} = useSelector((store: any) => ({
+    auth: store.authReducer,
   }))
 
-  let { loading, error } = auth;
+  let {loading, error} = auth;
 
-  const googleAuthProviderHandler = async () => {
-    try {
-        const provider = new GoogleAuthProvider();
-        const auth = getAuth(firebaseApp);
-
-        const result = await signInWithPopup(auth, provider);
-        
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken; // google token to get more info from the google API
-
-      //@ts-ignore
-      cacheAuthHandler(result.user?.stsTokenManager);
-      
-      dispatch(setUser({ payload:result.user}));
-
-
-    } catch (error:any) {
-      console.log(error.message);
-      return error;
-    }
-  }
-
-
-  const facebookProviderHandler = async () => {
-    try {
-      const provider = new FacebookAuthProvider();
-      const auth = getAuth(firebaseApp);
-      provider.setCustomParameters({
-        'display': 'popup'
-      });
-
-      const result = await signInWithPopup(auth, provider);
-      const credential = FacebookAuthProvider.credentialFromResult(result);
-      const accessToken = credential?.accessToken; // facebook token to get more info from the google API 
-
-      //@ts-ignore
-      cacheAuthHandler(result.user?.stsTokenManager);
-      
-      dispatch(setUser({ payload:result.user}));
-
-      return result.user;
-    } catch (error) {
-      
-    }
-  }
-  
+  let ErrorContent:string[] = error?.split("/");
 
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
-      const credentials: AuthCredentials = {
+      const credentials: LoginCredentials = {
         email: values.email,
-        password: values.password
+        password: values.password,
       }
 
       try {
         //@ts-ignore
-        await dispatch(loginUserThunk(credentials));
+        await dispatch(loginUserThunk(credentials))
 
-        navigate('/dashboard');
-
+        navigate('/dashboard')
       } catch (error) {
-        console.log('loginError', error);
+        return null;
       }
-
     },
   })
 
@@ -132,7 +79,10 @@ export function Login() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            onClick={googleAuthProviderHandler}
+            onClick={async() => {
+                //@ts-ignore
+                await dispatch(googleAuthProviderHandlerThunk({})) 
+            }}
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
           >
             <img
@@ -150,7 +100,7 @@ export function Login() {
         <div className='col-md-6'>
           {/* begin::Google link */}
           <a
-            onClick={facebookProviderHandler}
+            onClick={() => console.log("1")}
             className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
           >
             <img
@@ -177,18 +127,9 @@ export function Login() {
       </div>
       {/* end::Separator */}
 
-      {formik.status ? (
-        <div className='mb-lg-15 alert alert-danger'>
-          <div className='alert-text font-weight-bold'>{formik.status}</div>
-        </div>
-      ) : (
-        <div className='mb-10 bg-light-info p-8 rounded'>
-          <div className='text-info'>
-            Use account <strong>admin@demo.com</strong> and password <strong>demo</strong> to
-            continue.
-          </div>
-        </div>
-      )}
+      {error && (<div className='alert alert-danger text-capitalize' role='alert'>
+       {ErrorContent[1]}
+      </div>)}
 
       {/* begin::Form group */}
       <div className='fv-row mb-8'>

@@ -8,7 +8,7 @@ import {SidebarMenuItem} from './SidebarMenuItem'
 const SidebarMenuMain = () => {
   const intl = useIntl()
 
-  let user:string = "client";
+  let user:string = "coach"; // client head_coach coach
 
   return (
     <>
@@ -65,6 +65,81 @@ const SidebarMenuMain = () => {
       )}
 
       {/*** the dashboard paths for head coach  */}
+      {(user === 'head_coach' || user === 'admin') && (
+        <>
+        <div className='menu-item'>
+          <div className='menu-content pt-8 pb-2'>
+            <span className='menu-section text-muted text-uppercase fs-8 ls-1'>HEAD COACH</span>
+          </div>
+        </div>
+        <SidebarMenuItem
+          to='/apps/user-management/users'
+          icon='/media/icons/duotune/general/gen051.svg'
+          title='User management'
+          fontIcon='bi-layers'
+        />
+        <SidebarMenuItem
+          to='/admin/lists'
+          icon='/media/icons/duotune/general/gen025.svg'
+          title='Projects'
+          fontIcon='bi-layers'
+        />
+         <SidebarMenuItem
+          to='/admin/tables'
+          icon='/media/icons/duotune/general/gen010.svg'
+          title='Employees'
+          fontIcon='bi-layers'
+        />
+         <SidebarMenuItem
+          to='/admin/charts'
+          icon='/media/icons/duotune/graphs/gra005.svg'
+          title='Statistics'
+          fontIcon='bi-layers'
+        />
+        <SidebarMenuItem
+          to='/admin/statistics'
+          icon='/media/icons/duotune/graphs/gra007.svg'
+          title='Revenue'
+          fontIcon='bi-layers'
+        />   
+        </>
+      )}
+
+
+      {/*** the dashboard paths for coach both junior and senior  */}
+      {
+        (user === 'coach' || user === 'senior_coach') && (
+          <>
+            <div className='menu-item'>
+              <div className='menu-content pt-8 pb-2'>
+                <span className='menu-section text-muted text-uppercase fs-8 ls-1'>COACH</span>
+              </div>
+            </div>
+             <SidebarMenuItem
+              to='/apps/user-management/users'
+              icon='/media/icons/duotune/general/gen051.svg'
+              title='Project Supervising'
+              fontIcon='bi-layers'
+            />
+             <SidebarMenuItem
+              to='/apps/user-management/users'
+              icon='/media/icons/duotune/general/gen051.svg'
+              title='Report'
+              fontIcon='bi-layers'
+            />
+             <SidebarMenuItem
+              to='/apps/chat/drawer-chat'
+              icon='/media/icons/duotune/general/gen051.svg'
+              title='Discussions'
+              fontIcon='bi-layers'
+            />
+            <SidebarMenuItemWithSub to='/view' title='Tasks' hasBullet={false}>
+              <SidebarMenuItem to='/view/discussion' title='Tasks Creation' hasBullet={true} />
+              <SidebarMenuItem to='/view/action-points' title='Assessing Tasks' hasBullet={true} />
+            </SidebarMenuItemWithSub>
+         </>
+        )
+      }
 
 
       {/** general paths for mode */}
@@ -80,16 +155,7 @@ const SidebarMenuMain = () => {
         icon='/media/icons/duotune/communication/com012.svg'
       >
         <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
-        {/*<SidebarMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />*/}
-        <SidebarMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem
-        to='/apps/user-management/users'
-        icon='/media/icons/duotune/general/gen051.svg'
-        title='User management'
-        fontIcon='bi-layers'
-      />
-
     </>
   )
 }
@@ -124,17 +190,17 @@ export {SidebarMenuMain}
         <SidebarMenuItem to='/error/500' title='Error 500' hasBullet={true} />
       </SidebarMenuItemWithSub>
       <SidebarMenuItemWithSub
-        to='/crafted/widgets'
+        to='/admin'
         title='Widgets'
         icon='/media/icons/duotune/general/gen025.svg'
         fontIcon='bi-layers'
       >
-        <SidebarMenuItem to='/crafted/widgets/lists' title='Lists' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/widgets/statistics' title='Statistics' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/widgets/charts' title='Charts' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/widgets/mixed' title='Mixed' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/widgets/tables' title='Tables' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/widgets/feeds' title='Feeds' hasBullet={true} />
+        <SidebarMenuItem to='/admin/lists' title='Lists' hasBullet={true} />
+        <SidebarMenuItem to='/admin/statistics' title='Statistics' hasBullet={true} />
+        <SidebarMenuItem to='/admin/charts' title='Charts' hasBullet={true} />
+        <SidebarMenuItem to='/admin/mixed' title='Mixed' hasBullet={true} />
+        <SidebarMenuItem to='/admin/tables' title='Tables' hasBullet={true} />
+        <SidebarMenuItem to='/admin/feeds' title='Feeds' hasBullet={true} />
       </SidebarMenuItemWithSub>}
  * 
  */

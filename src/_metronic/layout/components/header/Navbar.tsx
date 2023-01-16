@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {HeaderNotificationsMenu, HeaderUserMenu, Search, ThemeModeSwitcher} from '../../../partials'
+import {HeaderUserMenu, Search, ThemeModeSwitcher} from '../../../partials'
 import {useLayout} from '../../core'
+import {useSelector} from 'react-redux'
 
 const itemClass = 'ms-1 ms-lg-3'
 const btnClass =
@@ -11,29 +12,25 @@ const btnIconClass = 'svg-icon-1'
 
 const Navbar = () => {
   const {config} = useLayout()
+  let isClient = 1; // 0 - client
+
+   const {currentUser} = useSelector((store: any) => ({
+    currentUser: store.authReducer.currentUser,
+  }))
+
+  let _currentUser = JSON.parse(currentUser);
+
   return (
     <div className='app-navbar flex-shrink-0'>
       <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
         <Search />
       </div>
 
-      <div className={clsx('app-navbar-item', itemClass)}>
+      {isClient === 0 && (<div className={clsx('app-navbar-item', itemClass)}>
         <div id='kt_activities_toggle' className={btnClass}>
           <KTSVG path='/media/icons/duotune/general/gen032.svg' className={btnIconClass} />
         </div>
-      </div>
-
-      <div className={clsx('app-navbar-item', itemClass)}>
-        <div
-          data-kt-menu-trigger="{default: 'click'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-          className={btnClass}
-        >
-          <KTSVG path='/media/icons/duotune/general/gen022.svg' className={btnIconClass} />
-        </div>
-        <HeaderNotificationsMenu />
-      </div>
+      </div>)}
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div className={clsx('position-relative', btnClass)} id='kt_drawer_chat_toggle'>
@@ -53,7 +50,9 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' />
+           {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
+             <img  src={_currentUser?.photoURL} alt=''/>
+          ) : (<img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' />)}
         </div>
         <HeaderUserMenu />
       </div>
