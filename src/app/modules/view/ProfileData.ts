@@ -1,6 +1,6 @@
 import {PageLink} from '../../../_metronic/layout/core'
 
-export const profileSubmenu: Array<PageLink> = [
+export const viewSubmenu: Array<PageLink> = [
   {
     title: 'Overview',
     path: '/view/discussion',

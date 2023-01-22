@@ -1,9 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, {useState} from 'react'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {Card4} from '../../../../_metronic/partials/content/cards/Card4'
+import { CustomizeModal } from '../../../util/cmodal'
+import { MyDropzone } from '../../../util/file-upload/FileUpload'
+
 
 export function Documents() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = ():void => setIsModalOpen(true); 
+  const closeModal = ():void => setIsModalOpen(false); 
+
   return (
     <>
       <div className='d-flex flex-wrap flex-stack mb-6'>
@@ -26,33 +34,9 @@ export function Documents() {
             />
           </div>
 
-          <a href='#' className='btn btn-primary btn-sm'>
+          <button type='button' className='btn btn-primary btn-sm' onClick={openModal}>
             File Manager
-          </a>
-        </div>
-      </div>
-
-      <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
-        <div className='col-12 col-sm-12 col-xl'>
-          <Card4
-            icon='/media/svg/files/folder-document.svg'
-            title='Finance'
-            description='7 files'
-          />
-        </div>
-        <div className='col-12 col-sm-12 col-xl'>
-          <Card4
-            icon='/media/svg/files/folder-document.svg'
-            title='Customers'
-            description='3 files'
-          />
-        </div>
-        <div className='col-12 col-sm-12 col-xl'>
-          <Card4
-            icon='/media/svg/files/folder-document.svg'
-            title='CRM Project'
-            description='25 files'
-          />
+          </button>
         </div>
       </div>
 
@@ -94,6 +78,9 @@ export function Documents() {
           />
         </div>
       </div>
+      <CustomizeModal isOpen={isModalOpen} closeFxn={() => closeModal()}>
+        <MyDropzone/>
+      </CustomizeModal>
     </>
   )
 }

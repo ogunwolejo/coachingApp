@@ -137,49 +137,7 @@ const Notifications: React.FC = () => {
                     </td>
                   </tr>
 
-                  <tr>
-                    <td>New Team Members</td>
-                    <td>
-                      <div className='form-check form-check-solid'>
-                        <input
-                          className='form-check-input'
-                          type='checkbox'
-                          value=''
-                          id='team1'
-                          defaultChecked={data.newTeamMembers.email}
-                          onChange={() =>
-                            updateData({
-                              newTeamMembers: {
-                                phone: data.newTeamMembers.phone,
-                                email: !data.newTeamMembers.email,
-                              },
-                            })
-                          }
-                        />
-                        <label className='form-check-label ps-2' htmlFor='team1'></label>
-                      </div>
-                    </td>
-                    <td>
-                      <div className='form-check form-check-solid'>
-                        <input
-                          className='form-check-input'
-                          type='checkbox'
-                          value=''
-                          id='team2'
-                          defaultChecked={data.newTeamMembers.phone}
-                          onChange={() =>
-                            updateData({
-                              newTeamMembers: {
-                                phone: !data.newTeamMembers.phone,
-                                email: data.newTeamMembers.email,
-                              },
-                            })
-                          }
-                        />
-                        <label className='form-check-label ps-2' htmlFor='team2'></label>
-                      </div>
-                    </td>
-                  </tr>
+                  
 
                   <tr>
                     <td>Completed Projects</td>

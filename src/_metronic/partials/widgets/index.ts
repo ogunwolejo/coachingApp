@@ -1,9 +1,9 @@
 // charts
 export * from './feeds/FeedsWidget2'
 export * from './feeds/FeedsWidget3'
-export * from './feeds/FeedsWidget4'
 export * from './feeds/FeedsWidget5'
 export * from './feeds/FeedsWidget6'
+export * from  './feeds/CreateDiscussion'
 
 // mixed
 export * from './mixed/MixedWidget1'
@@ -73,7 +73,6 @@ export * from './engage/EngageWidget3'
 // feeds
 export * from './feeds/FeedsWidget2'
 export * from './feeds/FeedsWidget3'
-export * from './feeds/FeedsWidget4'
 
 // tiles
 export * from './tiles/TilesWidget1'

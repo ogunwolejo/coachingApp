@@ -139,7 +139,7 @@ const Step2: FC = () => {
                   Company Account
                 </span>
                 <span className='fs-6 fw-bold text-gray-400'>
-                  Use images to enhance your post flow
+                 From partnership to enterprise from of business 
                 </span>
               </span>
             </span>
@@ -162,9 +162,9 @@ const Step2: FC = () => {
 
               <span className='d-flex flex-column'>
                 <span className='fw-bolder text-gray-800 text-hover-primary fs-5'>
-                  Developer Account
+                  Personal Account
                 </span>
-                <span className='fs-6 fw-bold text-gray-400'>Use images to your post time</span>
+                <span className='fs-6 fw-bold text-gray-400'>For small scale or one man business</span>
               </span>
             </span>
 
@@ -173,31 +173,7 @@ const Step2: FC = () => {
             </span>
           </label>
 
-          <label className='d-flex flex-stack mb-0 cursor-pointer'>
-            <span className='d-flex align-items-center me-2'>
-              <span className='symbol symbol-50px me-6'>
-                <span className='symbol-label'>
-                  <KTSVG
-                    path='/media/icons/duotune/graphs/gra008.svg'
-                    className='svg-icon-1 svg-icon-gray-600'
-                  />
-                </span>
-              </span>
-
-              <span className='d-flex flex-column'>
-                <span className='fw-bolder text-gray-800 text-hover-primary fs-5'>
-                  Testing Account
-                </span>
-                <span className='fs-6 fw-bold text-gray-400'>
-                  Use images to enhance time travel rivers
-                </span>
-              </span>
-            </span>
-
-            <span className='form-check form-check-custom form-check-solid'>
-              <Field className='form-check-input' type='radio' name='accountPlan' value='3' />
-            </span>
-          </label>
+          
         </div>
       </div>
     </div>

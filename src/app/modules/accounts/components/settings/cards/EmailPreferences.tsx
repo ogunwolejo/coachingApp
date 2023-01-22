@@ -57,77 +57,8 @@ const EmailPreferences: React.FC = () => {
               </span>
             </label>
 
-            <div className='separator separator-dashed my-6'></div>
+            <div className='separator separator-dashed my-6'></div> 
 
-            <label className='form-check form-check-custom form-check-solid align-items-start'>
-              <input
-                className='form-check-input me-3'
-                type='checkbox'
-                name='email-preferences[]'
-                defaultChecked={data.payouts}
-                onChange={() =>
-                  updateData({
-                    payouts: !data.payouts,
-                  })
-                }
-              />
-
-              <span className='form-check-label d-flex flex-column align-items-start'>
-                <span className='fw-bolder fs-5 mb-0'>Payouts</span>
-                <span className='text-muted fs-6'>
-                  Receive a notification for every initiated payout.
-                </span>
-              </span>
-            </label>
-
-            <div className='separator separator-dashed my-6'></div>
-
-            <label className='form-check form-check-custom form-check-solid align-items-start'>
-              <input
-                className='form-check-input me-3'
-                type='checkbox'
-                name='email-preferences[]'
-                defaultChecked={data.freeCollections}
-                onChange={() =>
-                  updateData({
-                    freeCollections: !data.freeCollections,
-                  })
-                }
-              />
-
-              <span className='form-check-label d-flex flex-column align-items-start'>
-                <span className='fw-bolder fs-5 mb-0'>Fee Collection</span>
-                <span className='text-muted fs-6'>
-                  Receive a notification each time you collect a fee from sales
-                </span>
-              </span>
-            </label>
-
-            <div className='separator separator-dashed my-6'></div>
-
-            <label className='form-check form-check-custom form-check-solid align-items-start'>
-              <input
-                className='form-check-input me-3'
-                type='checkbox'
-                name='email-preferences[]'
-                defaultChecked={data.customerPaymentDispute}
-                onChange={() =>
-                  updateData({
-                    customerPaymentDispute: !data.customerPaymentDispute,
-                  })
-                }
-              />
-
-              <span className='form-check-label d-flex flex-column align-items-start'>
-                <span className='fw-bolder fs-5 mb-0'>Customer Payment Dispute</span>
-                <span className='text-muted fs-6'>
-                  Receive a notification if a payment is disputed by a customer and for dispute
-                  purposes.
-                </span>
-              </span>
-            </label>
-
-            <div className='separator separator-dashed my-6'></div>
 
             <label className='form-check form-check-custom form-check-solid align-items-start'>
               <input
@@ -146,53 +77,6 @@ const EmailPreferences: React.FC = () => {
                 <span className='fw-bolder fs-5 mb-0'>Refund Alerts</span>
                 <span className='text-muted fs-6'>
                   Receive a notification if a payment is stated as risk by the Finance Department.
-                </span>
-              </span>
-            </label>
-
-            <div className='separator separator-dashed my-6'></div>
-
-            <label className='form-check form-check-custom form-check-solid align-items-start'>
-              <input
-                className='form-check-input me-3'
-                type='checkbox'
-                name='email-preferences[]'
-                defaultChecked={data.invoicePayments}
-                onChange={() =>
-                  updateData({
-                    invoicePayments: !data.invoicePayments,
-                  })
-                }
-              />
-
-              <span className='form-check-label d-flex flex-column align-items-start'>
-                <span className='fw-bolder fs-5 mb-0'>Invoice Payments</span>
-                <span className='text-muted fs-6'>
-                  Receive a notification if a customer sends an incorrect amount to pay their
-                  invoice.
-                </span>
-              </span>
-            </label>
-
-            <div className='separator separator-dashed my-6'></div>
-
-            <label className='form-check form-check-custom form-check-solid align-items-start'>
-              <input
-                className='form-check-input me-3'
-                type='checkbox'
-                name='email-preferences[]'
-                defaultChecked={data.webhookAPIEndpoints}
-                onChange={() =>
-                  updateData({
-                    webhookAPIEndpoints: !data.webhookAPIEndpoints,
-                  })
-                }
-              />
-
-              <span className='form-check-label d-flex flex-column align-items-start'>
-                <span className='fw-bolder fs-5 mb-0'>Webhook API Endpoints</span>
-                <span className='text-muted fs-6'>
-                  Receive notifications for consistently failing webhook API endpoints.
                 </span>
               </span>
             </label>

@@ -24,7 +24,7 @@ const SidebarMenuMain = () => {
     
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Views</span>
+          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Client</span>
         </div>
       </div>
       <SidebarMenuItemWithSub
@@ -49,16 +49,16 @@ const SidebarMenuMain = () => {
         </SidebarMenuItemWithSub>
       </SidebarMenuItemWithSub>
 
-      <SidebarMenuItem to='/crafted/pages/wizards/vertical' title='Payment' fontIcon="bi-payment" icon='/media/icons/duotune/communication/com006.svg'/>
+      <SidebarMenuItem to='/payment' title='Payment' fontIcon="bi-payment" icon='/media/icons/duotune/communication/com006.svg'/>
 
       <SidebarMenuItemWithSub
-        to='/crafted/accounts'
+        to='/accounts'
         title='Accounts'
         icon='/media/icons/duotune/communication/com006.svg'
         fontIcon='bi-person'
       >
-        <SidebarMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
-        <SidebarMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
+        <SidebarMenuItem to='/account/overview' title='Overview' hasBullet={true} />
+        <SidebarMenuItem to='/account/settings' title='Settings' hasBullet={true} />
       </SidebarMenuItemWithSub>
       
         </>
@@ -73,9 +73,9 @@ const SidebarMenuMain = () => {
           </div>
         </div>
         <SidebarMenuItem
-          to='/apps/user-management/users'
+          to='/project-management/projects'
           icon='/media/icons/duotune/general/gen051.svg'
-          title='User management'
+          title='Project Management'
           fontIcon='bi-layers'
         />
         <SidebarMenuItem
@@ -116,7 +116,7 @@ const SidebarMenuMain = () => {
               </div>
             </div>
              <SidebarMenuItem
-              to='/apps/user-management/users'
+              to='/coaching/projects'
               icon='/media/icons/duotune/general/gen051.svg'
               title='Project Supervising'
               fontIcon='bi-layers'
@@ -130,13 +130,9 @@ const SidebarMenuMain = () => {
              <SidebarMenuItem
               to='/apps/chat/drawer-chat'
               icon='/media/icons/duotune/general/gen051.svg'
-              title='Discussions'
+              title='Customize Report'
               fontIcon='bi-layers'
             />
-            <SidebarMenuItemWithSub to='/view' title='Tasks' hasBullet={false}>
-              <SidebarMenuItem to='/view/discussion' title='Tasks Creation' hasBullet={true} />
-              <SidebarMenuItem to='/view/action-points' title='Assessing Tasks' hasBullet={true} />
-            </SidebarMenuItemWithSub>
          </>
         )
       }

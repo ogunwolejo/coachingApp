@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {Languages} from './Languages'
 //import {toAbsoluteUrl} from '../../../helpers'
 import {useSelector} from 'react-redux'
 
@@ -41,19 +40,16 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5'>
-        <Link to='/crafted/account/settings' className='menu-link px-5'>
+        <Link to='/account/settings' className='menu-link px-5'>
           My Profile
         </Link>
       </div>
       <div className='menu-item px-5'>
-        <Link to='/crafted/account/settings' className='menu-link px-5'>
+        <Link to='/payment/subscribe' className='menu-link px-5'>
           Payment
         </Link>
       </div>
 
-      <div className='separator my-2'></div>
-
-      <Languages />
 
       <div className='menu-item px-5 my-1'></div>
 

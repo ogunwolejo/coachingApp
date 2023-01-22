@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {HeaderUserMenu, Search, ThemeModeSwitcher} from '../../../partials'
+import {HeaderUserMenu,  ThemeModeSwitcher} from '../../../partials'
 import {useLayout} from '../../core'
 import {useSelector} from 'react-redux'
 
@@ -12,8 +12,7 @@ const btnIconClass = 'svg-icon-1'
 
 const Navbar = () => {
   const {config} = useLayout()
-  let isClient = 1; // 0 - client
-
+  
    const {currentUser} = useSelector((store: any) => ({
     currentUser: store.authReducer.currentUser,
   }))
@@ -22,15 +21,12 @@ const Navbar = () => {
 
   return (
     <div className='app-navbar flex-shrink-0'>
-      <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
-        <Search />
-      </div>
-
-      {isClient === 0 && (<div className={clsx('app-navbar-item', itemClass)}>
+      
+      {/*isClient === 0 && (<div className={clsx('app-navbar-item', itemClass)}>
         <div id='kt_activities_toggle' className={btnClass}>
           <KTSVG path='/media/icons/duotune/general/gen032.svg' className={btnIconClass} />
         </div>
-      </div>)}
+  </div>)*/}
 
       <div className={clsx('app-navbar-item', itemClass)}>
         <div className={clsx('position-relative', btnClass)} id='kt_drawer_chat_toggle'>

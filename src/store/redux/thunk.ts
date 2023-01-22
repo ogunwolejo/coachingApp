@@ -73,11 +73,27 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
 
       return JSON.stringify(result.user)
     } catch (error: any) {
-      console.log(error.message)
+      //console.log(error.message)
       return rejectWithValue(error.code)
     }
   }
 )
+
+/*export const loginWithRefreshTokenThunk = createAsyncThunk('/loginRefreshToken', async(data:string, {rejectWithValue}) => {
+  try {
+    const auth = getAuth(firebaseApp);
+    const result = await signInWithCredential(auth, data);
+
+    if(result) {
+      return JSON.stringify(result.user) 
+    }
+
+    throw Error('Invaid token, try again')
+
+  } catch (error:any) {
+    return rejectWithValue(error.code);
+  }
+});*/
 
 
 

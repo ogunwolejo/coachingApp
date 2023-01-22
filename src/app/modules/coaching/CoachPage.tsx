@@ -4,12 +4,12 @@ import {Discussion} from './components/Discussion'
 import {ActionPoints} from './components/ActionPoints'
 import {Documents} from './components/Documents'
 import {Connections} from './components/Connections'
-import {ProfileHeader} from './ProfileHeader'
+import {CoachHeader} from './CoachHeader'
 
-const profileBreadCrumbs: Array<PageLink> = [
+const CoachBreadCrumbs: Array<PageLink> = [
   {
-    title: 'My View',
-    path: '/view/discussion',
+    title: 'Coach View',
+    path: '/coaching/project',
     isSeparator: false,
     isActive: false,
   },
@@ -21,12 +21,12 @@ const profileBreadCrumbs: Array<PageLink> = [
   },
 ]
 
-const ProfilePage = () => (
+const CoachPage = () => (
   <Routes>
     <Route
       element={
         <>
-          <ProfileHeader />
+          <CoachHeader />
           <Outlet />
         </>
       }
@@ -35,7 +35,7 @@ const ProfilePage = () => (
         path='discussion'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}> Discussion</PageTitle>
+            <PageTitle breadcrumbs={CoachBreadCrumbs}> Discussion</PageTitle>
             <Discussion />
           </>
         }
@@ -44,7 +44,7 @@ const ProfilePage = () => (
         path='action-points'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Action Point</PageTitle>
+            <PageTitle breadcrumbs={CoachBreadCrumbs}>Action Point</PageTitle>
             <ActionPoints />
           </>
         }
@@ -53,23 +53,23 @@ const ProfilePage = () => (
         path='documents'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Documents</PageTitle>
+            <PageTitle breadcrumbs={CoachBreadCrumbs}>Documents</PageTitle>
             <Documents />
           </>
         }
       />
       <Route
-        path='connections'
+        path='report'
         element={
           <>
-            <PageTitle breadcrumbs={profileBreadCrumbs}>Connections</PageTitle>
+            <PageTitle breadcrumbs={CoachBreadCrumbs}>Connections</PageTitle>
             <Connections />
           </>
         }
       />
-      <Route index element={<Navigate to='/view/discussion' />} />
+      {<Route index element={<Navigate to='/coaching/project' />} />}
     </Route>
   </Routes>
 )
 
-export default ProfilePage
+export default CoachPage

@@ -1,8 +1,8 @@
 import {Navigate, Route, Routes, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Charts} from './components/Charts'
-import {Lists} from './components/Lists'
-import {Tables} from './components/Tables'
+import {Projects} from './components/Projects'
+import {Employees} from './components/Employees'
 import {Mixed} from './components/Mixed'
 import {Statistics} from './components/Statistics'
 
@@ -39,8 +39,8 @@ const WidgetsPage = () => {
           path='lists'
           element={
             <>
-              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Lists</PageTitle>
-              <Lists />
+              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Projects</PageTitle>
+              <Projects />
             </>
           }
         />
@@ -57,8 +57,8 @@ const WidgetsPage = () => {
           path='tables'
           element={
             <>
-              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Tables</PageTitle>
-              <Tables />
+              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Employees</PageTitle>
+              <Employees />
             </>
           }
         />

@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
 
 type Props = {
   className: string
+  closeModal:any
 }
 
-const FeedsWidget4: React.FC<Props> = ({className}) => {
+const CreateDiscussion: React.FC<Props> = ({className, closeModal}) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Body */}
@@ -18,15 +18,16 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
           <div className='d-flex align-items-center flex-grow-1'>
             {/* begin::Avatar */}
             <div className='symbol symbol-45px me-5'>
-              <img src={toAbsoluteUrl('/media/avatars/300-7.jpg')} alt='' />
+              <img src={toAbsoluteUrl('/media/avatars/300-23.jpg')} alt='' />
             </div>
             {/* end::Avatar */}
 
             {/* begin::Info */}
             <div className='d-flex flex-column'>
-              <a href='#' className='text-gray-800 text-hover-primary fs-6 fw-bold'>
-                Carles Nilson
-              </a>
+              <p  className='text-gray-800 text-hover-primary fs-6 fw-bold'>
+                Nick Logan
+              </p>
+
               <span className='text-gray-400 fw-semibold'>PHP, SQLite, Artisan CLI</span>
               <span className='text-gray-400 fw-semibold'>Last week at 10:00 PM</span>
             </div>
@@ -38,27 +39,24 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
           <div className='my-0'>
             <button
               type='button'
+              onClick={closeModal}
               className='btn btn-sm btn-icon btn-color-primary btn-active-light-primary'
-              data-kt-menu-trigger='click'
-              data-kt-menu-placement='bottom-end'
-              data-kt-menu-flip='top-end'
-            >
-              <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+              >
+              <KTSVG path='/media/icons/duotune/arrows/arr061.svg' className='svg-icon-2' />
             </button>
-            <Dropdown1 />
           </div>
           {/* end::Menu */}
         </div>
         {/* end::Header */}
 
         {/* begin::Post */}
-        <div className='mb-7'>
+        <div className='mb-5'>
           {/* begin::Text */}
-          <div className='text-gray-800 mb-5'>
-            Outlines keep you honest. They stop you from indulging in poorly thought-out metaphors
-            about driving and keep you focused on the overall structure of your post
-          </div>
+          <p className='text-gray-400 fw-semibold mb-5 text-uppercase'>
+            Discuss with Coach, Create A discussion that address a problem or you can use the chat
+          </p>
           {/* end::Text */}
+
         </div>
         {/* end::Post */}
 
@@ -70,8 +68,8 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
         <form className='position-relative mb-6'>
           <textarea
             className='form-control border-0 p-1 pe-10 resize-none min-h-50px'
-            rows={1}
-            placeholder='Reply..'
+            rows={3}
+            placeholder='Create Discussion...'
           ></textarea>
 
           <div className='position-absolute top-0 end-0 me-n5'>
@@ -81,7 +79,6 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
                 className='svg-icon-3 mb-3'
               />
             </span>
-
           </div>
         </form>
         {/* edit::Reply input */}
@@ -91,4 +88,4 @@ const FeedsWidget4: React.FC<Props> = ({className}) => {
   )
 }
 
-export {FeedsWidget4}
+export {CreateDiscussion}
