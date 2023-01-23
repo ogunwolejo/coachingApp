@@ -41,19 +41,22 @@ const ToolbarClassic = () => {
           data-bs-target='#kt_modal_create_app'
         >
           Call My Coach
+          <KTSVG
+            path='/media/icons/duotune/communication/com009.svg'
+            className='svg-icon-3 ms-1 me-0'
+          />
         </a>
       )}
 
       {config.app?.toolbar?.primaryButton && (
-        <a
-          href='#'
+        <button
           onClick={() => setShowCreateAppModal(true)}
           className='btn btn-sm fw-bold btn-primary'
           data-bs-toggle='modal'
           data-bs-target='#kt_modal_create_app'
         >
           Call
-        </a>
+        </button>
       )}
       <CreateAppModal show={showCreateAppModal} handleClose={() => setShowCreateAppModal(false)} />
     </div>

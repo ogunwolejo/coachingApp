@@ -4,6 +4,7 @@ import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {ClientDashboardWrapper} from '../pages/dashboard/ClientDashboardWrapper'
+import {HeadCoachDashboardWrapper} from '../pages/dashboard/HeadCoachDashboardWrapper'
 import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
@@ -18,8 +19,9 @@ const PrivateRoutes = () => {
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
   const CoachingProjects = lazy(() => import('../modules/coaching/Projects'))
   const ProjectPage = lazy(() => import('../modules/coaching/CoachPage'))
+  const ReportPage = lazy(() => import('../modules/coaching/ReportPage'))
 
-  let role: number = 0 // 0 - client 1 - coach
+  let role: number = 0; // 0 - client 1 - coach
   const isClient: boolean = role === 0 ? true : false
 
   return (
@@ -28,9 +30,12 @@ const PrivateRoutes = () => {
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
-        {isClient && <Route path='/dashboard' element={<ClientDashboardWrapper />} />}
+        
+        {/*isClient && <Route path='dashboard' element={<ClientDashboardWrapper />} />*/}
+        {/** HeadCoachDashboardPage */}
+         {isClient && <Route path='dashboard' element={<HeadCoachDashboardWrapper />} />} 
+        <Route path='dashboard' element={<DashboardWrapper />} />
 
-        <Route path='/dashboard' element={<DashboardWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='menu-test' element={<MenuTestPage />} />
         {/* Lazy Modules */}
@@ -52,6 +57,15 @@ const PrivateRoutes = () => {
             }
           />
         </Route>
+
+        <Route
+          path='report'
+          element={
+            <SuspensedView>
+              <ReportPage />
+            </SuspensedView>
+          }
+        ></Route>
 
         <Route
           path='payment/*'

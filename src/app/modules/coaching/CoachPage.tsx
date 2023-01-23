@@ -3,7 +3,7 @@ import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Discussion} from './components/Discussion'
 import {ActionPoints} from './components/ActionPoints'
 import {Documents} from './components/Documents'
-import {Connections} from './components/Connections'
+import {Report} from './components/Report'
 import {CoachHeader} from './CoachHeader'
 
 const CoachBreadCrumbs: Array<PageLink> = [
@@ -62,8 +62,8 @@ const CoachPage = () => (
         path='report'
         element={
           <>
-            <PageTitle breadcrumbs={CoachBreadCrumbs}>Connections</PageTitle>
-            <Connections />
+            <PageTitle breadcrumbs={CoachBreadCrumbs}>Report</PageTitle>
+            <Report />
           </>
         }
       />

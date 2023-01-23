@@ -8,135 +8,125 @@ import {SidebarMenuItem} from './SidebarMenuItem'
 const SidebarMenuMain = () => {
   const intl = useIntl()
 
-  let user:string = "coach"; // client head_coach coach
+  let user: string = 'client' // client head_coach coach
 
   return (
     <>
-    {/***** the dashboard paths for client mode */}
-      {user === "client" && (
+      {/***** the dashboard paths for client mode */}
+      {user === 'client' && (
         <>
-        <SidebarMenuItem
-        to='/dashboard'
-        icon='/media/icons/duotune/art/art002.svg'
-        title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
-        fontIcon='bi-app-indicator'
-      />
-    
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Client</span>
-        </div>
-      </div>
-      <SidebarMenuItemWithSub
-        to='/crafted/pages'
-        title='Page'
-        fontIcon='bi-archive'
-        icon='/media/icons/duotune/general/gen022.svg'
-      >
-        <SidebarMenuItemWithSub to='/view' title='My View' hasBullet={false}>
-          <SidebarMenuItem to='/view/discussion' title='History Of Discussions' hasBullet={true} />
-          <SidebarMenuItem to='/view/action-points' title='Action Points' hasBullet={true} />
           <SidebarMenuItem
-            to='/view/documents'
-            title='Documents'
-            hasBullet={true}
+            to='/dashboard'
+            icon='/media/icons/duotune/art/art002.svg'
+            title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
+            fontIcon='bi-app-indicator'
           />
+
+          <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Client</span>
+            </div>
+          </div>
+          <SidebarMenuItemWithSub
+            to='/crafted/pages'
+            title='Page'
+            fontIcon='bi-archive'
+            icon='/media/icons/duotune/general/gen022.svg'
+          >
+            <SidebarMenuItemWithSub to='/view' title='My View' hasBullet={false}>
+              <SidebarMenuItem
+                to='/view/discussion'
+                title='History Of Discussions'
+                hasBullet={true}
+              />
+              <SidebarMenuItem to='/view/action-points' title='Action Points' hasBullet={true} />
+              <SidebarMenuItem to='/view/documents' title='Documents' hasBullet={true} />
+              <SidebarMenuItem to='/view/connections' title='Connections' hasBullet={true} />
+            </SidebarMenuItemWithSub>
+          </SidebarMenuItemWithSub>
+
           <SidebarMenuItem
-            to='/view/connections'
-            title='Connections'
-            hasBullet={true}
+            to='/payment'
+            title='Payment'
+            fontIcon='bi-payment'
+            icon='/media/icons/duotune/communication/com006.svg'
           />
-        </SidebarMenuItemWithSub>
-      </SidebarMenuItemWithSub>
 
-      <SidebarMenuItem to='/payment' title='Payment' fontIcon="bi-payment" icon='/media/icons/duotune/communication/com006.svg'/>
-
-      <SidebarMenuItemWithSub
-        to='/accounts'
-        title='Accounts'
-        icon='/media/icons/duotune/communication/com006.svg'
-        fontIcon='bi-person'
-      >
-        <SidebarMenuItem to='/account/overview' title='Overview' hasBullet={true} />
-        <SidebarMenuItem to='/account/settings' title='Settings' hasBullet={true} />
-      </SidebarMenuItemWithSub>
-      
+          <SidebarMenuItemWithSub
+            to='/accounts'
+            title='Accounts'
+            icon='/media/icons/duotune/communication/com006.svg'
+            fontIcon='bi-person'
+          >
+            <SidebarMenuItem to='/account/overview' title='Overview' hasBullet={true} />
+            <SidebarMenuItem to='/account/settings' title='Settings' hasBullet={true} />
+          </SidebarMenuItemWithSub>
         </>
       )}
 
       {/*** the dashboard paths for head coach  */}
       {(user === 'head_coach' || user === 'admin') && (
         <>
-        <div className='menu-item'>
-          <div className='menu-content pt-8 pb-2'>
-            <span className='menu-section text-muted text-uppercase fs-8 ls-1'>HEAD COACH</span>
+          <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>HEAD COACH</span>
+            </div>
           </div>
-        </div>
-        <SidebarMenuItem
-          to='/project-management/projects'
-          icon='/media/icons/duotune/general/gen051.svg'
-          title='Project Management'
-          fontIcon='bi-layers'
-        />
-        <SidebarMenuItem
-          to='/admin/lists'
-          icon='/media/icons/duotune/general/gen025.svg'
-          title='Projects'
-          fontIcon='bi-layers'
-        />
-         <SidebarMenuItem
-          to='/admin/tables'
-          icon='/media/icons/duotune/general/gen010.svg'
-          title='Employees'
-          fontIcon='bi-layers'
-        />
-         <SidebarMenuItem
-          to='/admin/charts'
-          icon='/media/icons/duotune/graphs/gra005.svg'
-          title='Statistics'
-          fontIcon='bi-layers'
-        />
-        <SidebarMenuItem
-          to='/admin/statistics'
-          icon='/media/icons/duotune/graphs/gra007.svg'
-          title='Revenue'
-          fontIcon='bi-layers'
-        />   
+          <SidebarMenuItem
+            to='/project-management/projects'
+            icon='/media/icons/duotune/general/gen051.svg'
+            title='Project Management'
+            fontIcon='bi-layers'
+          />
+          <SidebarMenuItem
+            to='/admin/lists'
+            icon='/media/icons/duotune/general/gen025.svg'
+            title='Projects'
+            fontIcon='bi-layers'
+          />
+          <SidebarMenuItem
+            to='/admin/tables'
+            icon='/media/icons/duotune/general/gen010.svg'
+            title='Employees'
+            fontIcon='bi-layers'
+          />
+          <SidebarMenuItem
+            to='/admin/charts'
+            icon='/media/icons/duotune/graphs/gra005.svg'
+            title='Statistics'
+            fontIcon='bi-layers'
+          />
+          <SidebarMenuItem
+            to='/admin/statistics'
+            icon='/media/icons/duotune/graphs/gra007.svg'
+            title='Revenue'
+            fontIcon='bi-layers'
+          />
         </>
       )}
 
-
       {/*** the dashboard paths for coach both junior and senior  */}
-      {
-        (user === 'coach' || user === 'senior_coach') && (
-          <>
-            <div className='menu-item'>
-              <div className='menu-content pt-8 pb-2'>
-                <span className='menu-section text-muted text-uppercase fs-8 ls-1'>COACH</span>
-              </div>
+      {(user === 'coach' || user === 'senior_coach') && (
+        <>
+          <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>COACH</span>
             </div>
-             <SidebarMenuItem
-              to='/coaching/projects'
-              icon='/media/icons/duotune/general/gen051.svg'
-              title='Project Supervising'
-              fontIcon='bi-layers'
-            />
-             <SidebarMenuItem
-              to='/apps/user-management/users'
-              icon='/media/icons/duotune/general/gen051.svg'
-              title='Report'
-              fontIcon='bi-layers'
-            />
-             <SidebarMenuItem
-              to='/apps/chat/drawer-chat'
-              icon='/media/icons/duotune/general/gen051.svg'
-              title='Customize Report'
-              fontIcon='bi-layers'
-            />
-         </>
-        )
-      }
-
+          </div>
+          <SidebarMenuItem
+            to='/coaching/projects'
+            icon='/media/icons/duotune/general/gen051.svg'
+            title='Project Supervising'
+            fontIcon='bi-layers'
+          />
+          <SidebarMenuItem
+            to='/report'
+            icon='/media/icons/duotune/general/gen052.svg'
+            title='Report'
+            fontIcon='bi-layers'
+          />
+        </>
+      )}
 
       {/** general paths for mode */}
       <div className='menu-item'>
@@ -157,7 +147,6 @@ const SidebarMenuMain = () => {
 }
 
 export {SidebarMenuMain}
-
 
 /***
  * <SidebarMenuItem
