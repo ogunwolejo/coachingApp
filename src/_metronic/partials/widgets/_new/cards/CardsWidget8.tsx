@@ -1,5 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import clsx from 'clsx'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+//import { UsersList } from '../../../../../app/modules/view/components/UsersList';
+import { toAbsoluteUrl } from '../../../../helpers/AssetHelpers';
 
 type Props = {
   className: string
@@ -21,28 +24,24 @@ const CardsWidget8 = ({className,  icon, items,  labelColor, textColor}: Props) 
     <div className='card-body d-flex flex-column justify-content-end pe-0'>
       
       <div className='symbol-group symbol-hover flex-nowrap'>
-        {items.map((item, index) => (
-          <div
-            className='symbol symbol-35px symbol-circle'
-            data-bs-container="body"
-            data-bs-toggle='popover'
-            data-bs-placement="bottom"
-            data-bs-content={item.name}
-            key={`cw7-item-${index}`}
-          >
-            {item.state && item.initials && (
-              <span
-                className={clsx(
-                  'symbol-label fw-bold',
-                  'bg-' + item.state,
-                  'text-inverse-' + item.state
+        {items &&
+        items.map((user, i) => {
+          return (
+            <OverlayTrigger
+              key={`${i}-${user.name}`}
+              placement='top'
+              overlay={<Tooltip id='tooltip-user-name'>{user.name}</Tooltip>}
+            >
+              <div className='symbol symbol-35px symbol-circle'>
+                {user.initials && (
+                  <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                    {user.initials}
+                  </span>
                 )}
-              >
-                {item.initials}
-              </span>
-            )}
-          </div>
-        ))}
+              </div>
+            </OverlayTrigger>
+          )
+        })}
       </div>
     </div>
   </div>

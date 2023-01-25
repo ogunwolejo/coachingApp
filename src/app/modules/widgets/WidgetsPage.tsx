@@ -9,7 +9,7 @@ import {Statistics} from './components/Statistics'
 const widgetsBreadCrumbs: Array<PageLink> = [
   {
     title: 'Stats',
-    path: '/admin/charts',
+    path: '/admin/statistics',
     isSeparator: false,
     isActive: false,
   },
@@ -26,17 +26,17 @@ const WidgetsPage = () => {
     <Routes>
       <Route element={<Outlet />}>
         <Route
-          path='charts'
+          path='statistics'
           element={
             <>
-              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Charts</PageTitle>
+              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Statistics</PageTitle>
               <Charts />
             </>
           }
         />
         
         <Route
-          path='lists'
+          path='project'
           element={
             <>
               <PageTitle breadcrumbs={widgetsBreadCrumbs}>Projects</PageTitle>
@@ -54,7 +54,7 @@ const WidgetsPage = () => {
           }
         />
         <Route
-          path='tables'
+          path='employees'
           element={
             <>
               <PageTitle breadcrumbs={widgetsBreadCrumbs}>Employees</PageTitle>
@@ -63,15 +63,15 @@ const WidgetsPage = () => {
           }
         />
         <Route
-          path='statistics'
+          path='revenue'
           element={
             <>
-              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Statiscics</PageTitle>
+              <PageTitle breadcrumbs={widgetsBreadCrumbs}>Revenue</PageTitle>
               <Statistics />
             </>
           }
         />
-        <Route index element={<Navigate to='/admin/lists' />} />
+        <Route index element={<Navigate to='/admin/project' />} />
       </Route>
     </Routes>
   )

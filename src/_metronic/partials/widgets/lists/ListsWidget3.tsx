@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import { KTSVG } from '../../../helpers';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   className: string
@@ -9,6 +9,10 @@ type Props = {
 }
 
 const ListsWidget3: React.FC<Props> = ({className}) => {
+  const navigate = useNavigate();
+
+  const navigationToActionPointPage = (): void => navigate('/view/action-points');
+  
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -19,13 +23,10 @@ const ListsWidget3: React.FC<Props> = ({className}) => {
           <button
             type='button'
             className='btn btn-sm btn-icon btn-color-primary btn-active-light-primary'
-            data-kt-menu-trigger='click'
-            data-kt-menu-placement='bottom-end'
-            data-kt-menu-flip='top-end'
+            onClick={navigationToActionPointPage}
           >
-            <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+            <KTSVG path='/media/icons/duotune/arrows/arr001.svg' className='svg-icon-2' />
           </button>
-          <Dropdown1 />
           {/* end::Menu */}
         </div>
       </div>

@@ -2,10 +2,11 @@
 import {FC} from 'react'
 
 
-const CardsWidget7: FC<{className:string; subject:string; value:number|string}> = ({
+const CardsWidget7: FC<{ className: string; subject: string; value: number | string;  color?:string}> = ({
   className,
   subject,
-  value
+  value,
+  color='text-black'
 }) => {
 
   return (
@@ -13,9 +14,9 @@ const CardsWidget7: FC<{className:string; subject:string; value:number|string}> 
       <div className='card-header pt-5'>
         <div className='card-title d-flex flex-column'>
           <div className='d-flex align-items-center'>
-            <span className='fs-2hx fw-bold text-dark me-2 lh-1 ls-n2'>{value}</span>
+            <span className={`fs-2hx fw-bold me-2 lh-1 ls-n2 ${color}`}>{value}</span>
           </div>
-          <span className='text-gray-400 pt-1 fw-semibold fs-6'>{subject}</span>
+          <span className='text-gray-700 pt-1 fw-semibold fs-6'>{subject}</span>
         </div>
       </div>
     </div>

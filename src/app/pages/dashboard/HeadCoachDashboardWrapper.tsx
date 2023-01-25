@@ -3,11 +3,9 @@ import {FC} from 'react'
 import {useIntl} from 'react-intl'
 import {PageTitle} from '../../../_metronic/layout/core'
 import {
-  ListsWidget2,
-  ListsWidget6,
-  CardsWidget7,
-  CardsWidget17,
+  CardsWidget7
 } from '../../../_metronic/partials/widgets'
+import { NavLink } from 'react-router-dom'
 
 const HeadCoachDashboardPage: FC = () => (
   <>
@@ -33,28 +31,30 @@ const HeadCoachDashboardPage: FC = () => (
       {/* end::Col */}
 
       {/* begin::Col */}
-      <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10'>
+      <NavLink to='/admin/employees' className='col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10'>
         <CardsWidget7
           className='h-md-100 mb-5 mb-xl-10 py-xl-4'
           subject='Employee Count'
           value='25'
         />
-      </div>
+      </NavLink>
       {/* end::Col */}
 
       {/* begin::Col */}
-      <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10'>
+      <NavLink to='/admin/project' className='col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10'>
         <CardsWidget7
-          className='h-md-100 py-xl-4 mb-5 mb-xl-10'
+          className='bg-primary h-md-100 py-xl-4 mb-5 mb-xl-10'
           subject='Total Project(s)'
           value='1232'
+          color='text-white'
         />
-      </div>
+      </NavLink>
       <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-md-5 mb-xl-10'>
         <CardsWidget7
-          className='h-md-100 mb-5 mb-xl-10 py-xl-4'
+          className='bg-info h-md-100 mb-5 mb-xl-10 py-xl-4'
           subject='Total Number Of Reports Submitted'
           value='44690'
+          color='text-white'
         />
       </div>
       {/* end::Col */}
@@ -65,23 +65,25 @@ const HeadCoachDashboardPage: FC = () => (
     <div className='row gy-5 g-xl-8 mb-xl-10'>
       <div className='col-xl-4'>
          <CardsWidget7
-          className='h-md-100 mb-5 mb-xl-10 py-xl-4'
+          className='h-md-100 mb-5 mb-xl-10 py-xl-4 bg-white'
           subject='This Year Revenue '
           value='44690'
         />
       </div>
        <div className='col-xl-4'>
          <CardsWidget7
-          className='h-md-100 mb-5 mb-xl-10 py-xl-4'
+          className='h-md-100 mb-5 mb-xl-10 py-xl-4 bg-dark text-white'
           subject='Total Revenue'
           value='44690'
+          color='text-white'
         />
       </div>
        <div className='col-xl-4'>
          <CardsWidget7
-          className='h-md-100 mb-5 mb-xl-10 py-xl-4'
+          className='h-md-100 mb-5 mb-xl-10 py-xl-4 bg-danger'
           subject='Wage Bill'
           value='4,469,000'
+          color='text-white'
         />
       </div>
     </div>

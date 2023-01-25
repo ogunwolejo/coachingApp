@@ -22,11 +22,11 @@ const EngageWidget10 = ({className}: Props) => (
             <br />
             <span className='position-relative d-inline-block text-danger'>
               <Link
-                to='/crafted/pages/profile/overview'
+                to='/payment/subscribe'
                 className='text-danger
                 opacity-75-hover'
               >
-                Select A Plan 
+                Choose Us 
               </Link>
 
               <span className='position-absolute opacity-15 bottom-0 start-0 border-4 border-danger border-bottom w-100'></span>

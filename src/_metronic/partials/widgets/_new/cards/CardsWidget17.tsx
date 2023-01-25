@@ -2,8 +2,9 @@
 import {FC} from 'react'
 
 
-const CardsWidget17: FC<{className:string}> = ({
+const CardsWidget17: FC<{ className: string; color?: string}> = ({
   className,
+  color='text-dark'
 }) => {
 
   return (
@@ -11,11 +12,10 @@ const CardsWidget17: FC<{className:string}> = ({
       <div className='card-header pt-5'>
         <div className='card-title d-flex flex-column'>
           <div className='d-flex align-items-center'>
-            <span className='fs-4 fw-semibold text-gray-400 me-1 align-self-start'>$</span>
-
-            <span className='fs-2hx fw-bold text-dark me-2 lh-1 ls-n2'>9,700</span>
+            <span className={`fs-4 fw-semibold ${color} me-1 align-self-start`}>&#8358;</span>
+            <span className={`fs-2hx fw-bold me-2 lh-1 ls-n2 ${color}`}>9,700</span>
           </div>
-          <span className='text-gray-400 pt-1 fw-semibold fs-6'>My Salary</span>
+          <span className='text-gray-700 pt-4 fw-semibold fs-6'>My Salary</span>
         </div>
       </div>
     </div>

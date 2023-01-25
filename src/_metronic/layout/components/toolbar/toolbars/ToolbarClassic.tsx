@@ -33,19 +33,15 @@ const ToolbarClassic = () => {
       )}
 
       {config.app?.toolbar?.secondaryButton && (
-        <a
-          //href='#'
-          //onClick={() => setShowCreateAppModal(true)}
+        <button
           className='btn btn-sm fw-bold btn-primary'
-          data-bs-toggle='modal'
-          data-bs-target='#kt_modal_create_app'
         >
           Call My Coach
           <KTSVG
             path='/media/icons/duotune/communication/com009.svg'
             className='svg-icon-3 ms-1 me-0'
           />
-        </a>
+        </button>
       )}
 
       {config.app?.toolbar?.primaryButton && (

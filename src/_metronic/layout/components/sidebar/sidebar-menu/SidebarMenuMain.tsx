@@ -79,25 +79,25 @@ const SidebarMenuMain = () => {
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/lists'
+            to='/admin/project'
             icon='/media/icons/duotune/general/gen025.svg'
             title='Projects'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/tables'
+            to='/admin/employees'
             icon='/media/icons/duotune/general/gen010.svg'
             title='Employees'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/charts'
+            to='/admin/statistics'
             icon='/media/icons/duotune/graphs/gra005.svg'
             title='Statistics'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/statistics'
+            to='/admin/revenue'
             icon='/media/icons/duotune/graphs/gra007.svg'
             title='Revenue'
             fontIcon='bi-layers'
