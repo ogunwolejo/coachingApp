@@ -8,7 +8,7 @@ import {SidebarMenuItem} from './SidebarMenuItem'
 const SidebarMenuMain = () => {
   const intl = useIntl()
 
-  let user: string = 'client' // client head_coach coach
+  let user: string = 'head_coach' // client head_coach coach
 
   return (
     <>

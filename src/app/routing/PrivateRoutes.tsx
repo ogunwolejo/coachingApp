@@ -31,9 +31,9 @@ const PrivateRoutes = () => {
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
         
-        {isClient && <Route path='dashboard' element={<ClientDashboardWrapper />} />}
+        {/*isClient && <Route path='dashboard' element={<ClientDashboardWrapper />} />*/}
         {/** HeadCoachDashboardPage */}
-         {/*isClient && <Route path='dashboard' element={<HeadCoachDashboardWrapper />} />*/} 
+         {isClient && <Route path='dashboard' element={<HeadCoachDashboardWrapper />} />} 
         <Route path='dashboard' element={<DashboardWrapper />} />
 
         <Route path='builder' element={<BuilderPageWrapper />} />

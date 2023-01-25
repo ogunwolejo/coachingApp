@@ -13,6 +13,8 @@ import {
 } from 'firebase/auth'
 import {cacheAuthHandler} from '../../app/util/caching.auth'
 import {AuthCredentials, LoginCredentials, ResetPassword} from '../../interface/interface'
+import {getFirestore, collection, addDoc} from 'firebase/firestore'
+import {ROLES} from '../../interface/enum'
 
 export const loginUserThunk = createAsyncThunk(
   'auth/loginUser',
@@ -66,14 +68,16 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
       const result = await signInWithPopup(auth, provider)
 
       const credential = GoogleAuthProvider.credentialFromResult(result)
-      const token = credential?.accessToken // google token to get more info from the google API
+      //const token = credential?.accessToken // google token to get more info from the google API
 
       //@ts-ignore
       cacheAuthHandler(result.user?.stsTokenManager)
-
-      return JSON.stringify(result.user)
+      if (result.user) {
+        const userRef = await createUserProfile(result.user)
+        await createUserRole(userRef, ROLES.CLIENT)
+        return JSON.stringify(result.user)
+      }
     } catch (error: any) {
-      //console.log(error.message)
       return rejectWithValue(error.code)
     }
   }
@@ -95,5 +99,39 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
   }
 });*/
 
+const createUserProfile = async (user: any) => {
+  try {
+    const db = getFirestore(firebaseApp)
+    const docRef = await addDoc(collection(db, 'user'), {
+      fullName: user.providerData[0].displayName,
+      email: user.providerData[0].email,
+      phoneContact: user.providerData[0].phoneNumber,
+      avatar: user.providerData[0].photoURL,
+      emailVerified: user.emailVerified,
+    })
 
+    if (docRef) {
+      console.log(docRef)
+      return docRef
+    }
 
+    throw new Error('Unable to create profile')
+  } catch (e: any) {
+    return e
+  }
+}
+
+const createUserRole = async (ref: any, role: string) => {
+  try {
+    const db = getFirestore(firebaseApp)
+    const roleRef = await addDoc(collection(db, 'roles'), {
+      data: role,
+      user: ref?.id,
+    })
+    if (roleRef) {
+      return roleRef
+    }
+  } catch (e: any) {
+    return e
+  }
+}
