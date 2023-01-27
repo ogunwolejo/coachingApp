@@ -6,7 +6,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
 //import {getUserByToken, login} from '../core/_requests'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {loginUserThunk, googleAuthProviderHandlerThunk} from '../../../../store/redux/thunk'
+import {loginUserThunk, googleAuthProviderHandlerThunk} from '../../../../store/redux/auth/thunk'
 import {useDispatch, useSelector} from 'react-redux'
 import {LoginCredentials} from '../../../../interface/interface'
 

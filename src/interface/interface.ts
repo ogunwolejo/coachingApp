@@ -23,3 +23,13 @@ export interface LocalStorageData {
   refreshToken: string
   isExpired: boolean
 }
+
+export interface ProfileData {
+  id:string;
+  fullName:string;
+  avatar:string;
+  phoneContact:null | string;
+  email:string;
+  emailVerified:boolean;
+  role:string
+}

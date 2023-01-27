@@ -13,22 +13,12 @@ import {Logout, AuthPage } from '../modules/auth'
 import { App } from '../App'
 import { useSelector } from 'react-redux'
 import _ from 'lodash';
-
-/**
- * Base URL of the website.
- *
- * @see https://facebook.github.io/create-react-app/docs/using-the-public-folder
- */
 const {PUBLIC_URL} = process.env
 
 const AppRoutes: FC = () => {
   const {currentUser} = useSelector((store:any) => ({
     currentUser:store.authReducer.currentUser
   }))
-
-  //const isCurrentUser:boolean = _.isEmpty(currentUser);
-
-  console.log(currentUser);
 
 
   return (

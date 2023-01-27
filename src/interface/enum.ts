@@ -4,5 +4,5 @@ export enum ROLES {
   SENIORCOACH = 'SENIORCOACH',
   ADMIN = 'ADMIN',
   BUSINESSADMIN = 'BUSINESSADMIN',
-  CLIENT = 'client',
+  CLIENT = 'CLIENT',
 }
