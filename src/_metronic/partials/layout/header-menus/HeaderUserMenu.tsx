@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-//import {toAbsoluteUrl} from '../../../helpers'
 import {useSelector} from 'react-redux'
 
 const HeaderUserMenu: FC = () => {
@@ -20,9 +19,15 @@ const HeaderUserMenu: FC = () => {
     >
       <div className='menu-item px-2'>
         <div className='menu-content d-flex align-items-center px-3'>
-          {_currentUser?.photoURL !== null && (
+          {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
             <div className='symbol symbol-50px me-5'>
-              <img alt='Logo' src={_currentUser?.photoURL} />
+              <img alt='' src={_currentUser?.photoURL} />
+            </div>
+          ) : (
+            <div className='symbol symbol-35px symbol-circle'>
+              <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                {_currentUser?.displayName[0]}
+              </span>
             </div>
           )}
 

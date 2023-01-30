@@ -38,6 +38,7 @@ export const registerUserThunk = createAsyncThunk(
     try {
       const {email, password} = credentials
       const auth = getAuth(firebaseApp)
+      const db = getFirestore(firebaseApp)
 
       const registerUser = await createUserWithEmailAndPassword(auth, email, password)
       if (registerUser && auth.currentUser) {
@@ -48,7 +49,11 @@ export const registerUserThunk = createAsyncThunk(
         await updatePassword(auth.currentUser, credentials.password)
         //@ts-ignore
         await sendEmailVerification(auth.currentUser)
-        //return JSON.stringify(registerUser.user)
+
+        await setDoc(doc(db, 'user', registerUser.user.uid), {
+          emailVerified: registerUser.user.emailVerified,
+          role:ROLES.CLIENT
+        })
       }
 
       throw Error('Could not register user, try again')
@@ -64,6 +69,7 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
     try {
       const provider = new GoogleAuthProvider()
       const auth = getAuth(firebaseApp)
+      const db = getFirestore(firebaseApp)
 
       const result = await signInWithPopup(auth, provider)
 
@@ -73,7 +79,11 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
       //@ts-ignore
       cacheAuthHandler(result.user?.stsTokenManager)
       if (result.user) {
-        const userRef = await createUserProfile(result.user, ROLES.CLIENT)
+        await setDoc(doc(db, 'user', result.user.uid), {
+              emailVerified: result.user.emailVerified,
+              role:ROLES.CLIENT
+        })
+
         return JSON.stringify(result.user)
       }
     } catch (error: any) {
@@ -83,20 +93,67 @@ export const googleAuthProviderHandlerThunk = createAsyncThunk(
 )
 
 
-const createUserProfile = async (user: any, role:string) => {
-  try {
-    const db = getFirestore(firebaseApp)
-    return await setDoc(doc(db, 'user'), {
-      id:user.uid,
-      fullName: user.providerData[0].displayName,
-      email: user.providerData[0].email,
-      phoneContact: user.providerData[0].phoneNumber,
-      avatar: user.providerData[0].photoURL,
-      emailVerified: user.emailVerified,
-      role
-    })
-  } catch (e: any) {
-    return e
-  }
-}
+export const adminGoogleAuthProviderHandlerThunk = createAsyncThunk(
+    '/adminGoogleAuth',
+    async (data: any, {rejectWithValue}) => {
+      try {
+        const provider = new GoogleAuthProvider()
+        const auth = getAuth(firebaseApp)
+        const db = getFirestore(firebaseApp)
+
+        const result = await signInWithPopup(auth, provider)
+
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        //const token = credential?.accessToken // google token to get more info from the google API
+
+        //@ts-ignore
+        cacheAuthHandler(result.user?.stsTokenManager)
+
+        if (result.user) {
+          console.log(ROLES.HEADCOACH)
+          await setDoc(doc(db, 'user', result.user.uid), {
+            emailVerified: result.user.emailVerified,
+            role:ROLES.HEADCOACH
+          })
+
+          return JSON.stringify(result.user)
+        }
+      } catch (error: any) {
+        return rejectWithValue(error.code)
+      }
+    }
+)
+
+export const employeeGoogleAuthProviderHandlerThunk = createAsyncThunk(
+    '/employeeGoogleAuth',
+    async (data: any, {rejectWithValue}) => {
+      try {
+        const provider = new GoogleAuthProvider()
+        const auth = getAuth(firebaseApp)
+        const db = getFirestore(firebaseApp)
+
+        const result = await signInWithPopup(auth, provider)
+
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        //const token = credential?.accessToken // google token to get more info from the google API
+
+        //@ts-ignore
+        cacheAuthHandler(result.user?.stsTokenManager)
+
+        if (result.user) {
+          await setDoc(doc(db, 'user', result.user.uid), {
+            emailVerified: result.user.emailVerified,
+            role:ROLES.COACH
+          })
+
+          return JSON.stringify(result.user)
+        }
+      } catch (error: any) {
+        return rejectWithValue(error.code)
+      }
+    }
+)
+
+
+
 

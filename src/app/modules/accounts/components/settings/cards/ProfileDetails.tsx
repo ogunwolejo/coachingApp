@@ -1,40 +1,74 @@
 import React, {useState} from 'react'
 import {toAbsoluteUrl} from '../../../../../../_metronic/helpers'
-import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
+import {IProfileDetails} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
+import {useDispatch, useSelector} from "react-redux";
+import {updateUserProfile} from "../../../../../../store/redux/profile/profile.thunk";
+import {ProfileUpdate} from "../../../../../../interface/interface";
 
 const profileDetailsSchema = Yup.object().shape({
   fName: Yup.string().required('First name is required'),
   lName: Yup.string().required('Last name is required'),
   contactPhone: Yup.string().required('Contact phone is required'),
-  country: Yup.string().required('Country is required'),
-  timeZone: Yup.string().required('Time zone is required'),
-  currency: Yup.string().required('Currency is required'),
+  country: Yup.string()//.required('Country is required')
 })
 
 const ProfileDetails: React.FC = () => {
-  const [data, setData] = useState<IProfileDetails>(initialValues)
-  const updateData = (fieldsToUpdate: Partial<IProfileDetails>): void => {
-    const updatedData = Object.assign(data, fieldsToUpdate)
-    setData(updatedData)
-  }
+  const dispatch = useDispatch();
+  const {loading, error, profile} = useSelector((store:any) => ({
+    loading:store?.profile.loading,
+    error:store?.profile.error,
+    profile:store?.profile.profile
+  }))
 
-  const [loading, setLoading] = useState(false)
+  const {currentUser} = useSelector((store: any) => ({
+    currentUser: store.authReducer.currentUser,
+  }))
+
+  let _currentUser = JSON.parse(currentUser);
+  const splitDisplayName:string[] = _currentUser.displayName.split(' ');
+  const fName:string = splitDisplayName[0];
+  const lName:string = splitDisplayName[1];
+  const contactPhone:string = _currentUser.providerData[0].phoneNumber;
+  const country:string = profile.country;
+
+  const [data, setData] = useState<IProfileDetails>({
+    avatar: _currentUser?.photoURL,
+    fName,
+    lName,
+    contactPhone:!contactPhone ? '' : contactPhone,
+    country: !country ? '' : country,
+  });
+
+  const updateFirstName = (el:string) => setData(prev => ({...prev, fName:el}));
+  const updateLastName = (el:string) => setData(prev => ({...prev, lName:el}));
+  const updateContactPhone = (el:string) => {
+    console.log('phone Number', typeof el,  el);
+    setData(prev => ({...prev, contactPhone:el}));
+  }
+  const updateCountry = (el:string) => setData(prev => ({...prev, country:el}));
+
+
   const formik = useFormik<IProfileDetails>({
-    initialValues,
+    initialValues:data,
     validationSchema: profileDetailsSchema,
-    onSubmit: (values) => {
-      setLoading(true)
-      setTimeout(() => {
-        values.communications.email = data.communications.email
-        values.communications.phone = data.communications.phone
-        const updatedData = Object.assign(data, values)
-        setData(updatedData)
-        setLoading(false)
-      }, 1000)
+    onSubmit: async(values) => {
+      //setLoading(true)
+      //@ts-ignore
+      const valuesToUpdate:ProfileUpdate = {
+        fullName: `${values.fName} ${values.lName}`,
+        id:_currentUser.uid,
+        country:values.country,
+        phoneNumber:values.contactPhone
+      }
+      console.log(values.contactPhone, valuesToUpdate);
+      //@ts-ignore
+      await dispatch(updateUserProfile(valuesToUpdate))
     },
   })
+
+  console.log(_currentUser, profile);
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -81,6 +115,8 @@ const ProfileDetails: React.FC = () => {
                       className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
                       placeholder='First name'
                       {...formik.getFieldProps('fName')}
+                      //onChange={(e:any) => updateFirstName(e.target.value)}
+                      //value={data.fName}
                     />
                     {formik.touched.fName && formik.errors.fName && (
                       <div className='fv-plugins-message-container'>
@@ -95,6 +131,8 @@ const ProfileDetails: React.FC = () => {
                       className='form-control form-control-lg form-control-solid'
                       placeholder='Last name'
                       {...formik.getFieldProps('lName')}
+                      //onChange={(e:any) => updateLastName(e.target.value)}
+                      //value={data.lName}
                     />
                     {formik.touched.lName && formik.errors.lName && (
                       <div className='fv-plugins-message-container'>
@@ -119,6 +157,8 @@ const ProfileDetails: React.FC = () => {
                   className='form-control form-control-lg form-control-solid'
                   placeholder='Phone number'
                   {...formik.getFieldProps('contactPhone')}
+                  //onChange={(e:any) => updateContactPhone(e.target.value)}
+                  //value={data.contactPhone}
                 />
                 {formik.touched.contactPhone && formik.errors.contactPhone && (
                   <div className='fv-plugins-message-container'>
@@ -139,6 +179,7 @@ const ProfileDetails: React.FC = () => {
                 <select
                   className='form-select form-select-solid form-select-lg fw-bold'
                   {...formik.getFieldProps('country')}
+                  //value={data.country}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -154,9 +195,9 @@ const ProfileDetails: React.FC = () => {
               </div>
             </div>
 
-            
 
-            <div className='row mb-6'>
+
+            {/*<div className='row mb-6'>
               <label className='col-lg-4 col-form-label required fw-bold fs-6'>Time Zone</label>
 
               <div className='col-lg-8 fv-row'>
@@ -177,76 +218,9 @@ const ProfileDetails: React.FC = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div>*/}
 
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Currency</label>
 
-              <div className='col-lg-8 fv-row'>
-                <select
-                  className='form-select form-select-solid form-select-lg'
-                  {...formik.getFieldProps('currency')}
-                >
-                  <option value=''>Select a currency..</option>
-                  <option value='USD'>USD - USA dollar</option>
-                  <option value='GBP'>GBP - British pound</option>
-                  <option value='AUD'>AUD - Australian dollar</option>
-                  <option value='JPY'>JPY - Japanese yen</option>
-                  <option value='SEK'>SEK - Swedish krona</option>
-                  <option value='CAD'>CAD - Canadian dollar</option>
-                  <option value='CHF'>CHF - Swiss franc</option>
-                </select>
-                {formik.touched.currency && formik.errors.currency && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.currency}</div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>Communication</label>
-
-              <div className='col-lg-8 fv-row'>
-                <div className='d-flex align-items-center mt-3'>
-                  <label className='form-check form-check-inline form-check-solid me-5'>
-                    <input
-                      className='form-check-input'
-                      name='communication[]'
-                      type='checkbox'
-                      defaultChecked={data.communications?.email}
-                      onChange={() => {
-                        updateData({
-                          communications: {
-                            email: !data.communications?.email,
-                            phone: data.communications?.phone,
-                          },
-                        })
-                      }}
-                    />
-                    <span className='fw-bold ps-2 fs-6'>Email</span>
-                  </label>
-
-                  <label className='form-check form-check-inline form-check-solid'>
-                    <input
-                      className='form-check-input'
-                      name='communication[]'
-                      type='checkbox'
-                      defaultChecked={data.communications?.phone}
-                      onChange={() => {
-                        updateData({
-                          communications: {
-                            email: data.communications?.email,
-                            phone: !data.communications?.phone,
-                          },
-                        })
-                      }}
-                    />
-                    <span className='fw-bold ps-2 fs-6'>Phone</span>
-                  </label>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>

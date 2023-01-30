@@ -1,19 +1,31 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useIntl} from 'react-intl'
 import {KTSVG} from '../../../../helpers'
 import {SidebarMenuItemWithSub} from './SidebarMenuItemWithSub'
 import {SidebarMenuItem} from './SidebarMenuItem'
+import {useSelector} from 'react-redux'
+import {ROLES} from '../../../../../interface/enum'
+import {BeatLoader} from 'react-spinners'
 
 const SidebarMenuMain = () => {
   const intl = useIntl()
 
-  let user: string = 'head_coach' // client head_coach coach
+  const { loading, error, profile } = useSelector((store: any) => ({
+      loading: store?.profile.loading,
+      error: store?.profile.error,
+      profile:store?.profile.profile
+    }));
 
   return (
     <>
+      <BeatLoader
+       color={'#FFF'}
+       loading={loading}
+       size={10}
+      />
       {/***** the dashboard paths for client mode */}
-      {user === 'client' && (
+      {profile?.role === ROLES.CLIENT && (
         <>
           <SidebarMenuItem
             to='/dashboard'
@@ -65,7 +77,7 @@ const SidebarMenuMain = () => {
       )}
 
       {/*** the dashboard paths for head coach  */}
-      {(user === 'head_coach' || user === 'admin') && (
+      {profile?.role === ROLES.HEADCOACH && (
         <>
           <div className='menu-item'>
             <div className='menu-content pt-8 pb-2'>
@@ -106,7 +118,7 @@ const SidebarMenuMain = () => {
       )}
 
       {/*** the dashboard paths for coach both junior and senior  */}
-      {(user === 'coach' || user === 'senior_coach') && (
+      {(profile?.role === ROLES.COACH || profile?.role === ROLES.SENIORCOACH) && (
         <>
           <div className='menu-item'>
             <div className='menu-content pt-8 pb-2'>
@@ -120,7 +132,7 @@ const SidebarMenuMain = () => {
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/report'
+            to='/reports'
             icon='/media/icons/duotune/general/gen052.svg'
             title='Report'
             fontIcon='bi-layers'
@@ -128,11 +140,14 @@ const SidebarMenuMain = () => {
         </>
       )}
 
-      {/** general paths for mode */}
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Chats</span>
-        </div>
+
+      {!loading && (
+      <>
+       {/** general paths for mode */}
+        <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+            <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Chats</span>
+            </div>
       </div>
       <SidebarMenuItemWithSub
         to='/apps/chat'
@@ -140,8 +155,10 @@ const SidebarMenuMain = () => {
         fontIcon='bi-chat-left'
         icon='/media/icons/duotune/communication/com012.svg'
       >
-        <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
+      <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
       </SidebarMenuItemWithSub>
+      </>
+      )}
     </>
   )
 }

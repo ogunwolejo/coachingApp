@@ -1,9 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, {useMemo} from 'react'
 import {Link} from 'react-router-dom'
-import {KTSVG} from '../../../../_metronic/helpers'
+import {useSelector} from "react-redux";
 
 export function Overview() {
+
+  const {loading, error, profile} = useSelector((store:any) => ({
+    loading:store?.profile.loading,
+    error:store?.profile.error,
+    profile:store?.profile.profile
+  }))
+
+  const {currentUser} = useSelector((store: any) => ({
+    currentUser: store.authReducer.currentUser,
+  }))
+
+  let _currentUser = JSON.parse(currentUser);
+
+
   return (
     <>
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
@@ -22,7 +36,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Max Smith</span>
+              <span className='fw-bolder fs-6 text-dark'>{_currentUser.displayName}</span>
             </div>
           </div>
 
@@ -30,8 +44,9 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>email</label>
 
             <div className='col-lg-8 d-flex align-items-center '>
-              <span className='fw-bolder me-2 fs-6'>ogunwole888@gmail.com</span>
-              <span className='badge badge-success'>Verified</span>
+              <span className='fw-bolder me-2 fs-6'>{_currentUser.email}</span>
+              {_currentUser.emailVerified && <span className='badge badge-success'>Verified</span>}
+              {!_currentUser.emailVerified && <span className='badge badge-warning'>Not Verified</span>}
             </div>
           </div>
 
@@ -46,7 +61,7 @@ export function Overview() {
             </label>
 
             <div className='col-lg-8 fv-row'>
-              <span className='fw-bolder fs-6 '>044 3276 454 935</span>
+              <span className='fw-bolder fs-6 '>{profile.phoneNumber ? profile.phoneNumber : ''}</span>
             </div>
           </div>
 
@@ -61,17 +76,10 @@ export function Overview() {
             </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Germany</span>
+              <span className='fw-bolder fs-6 text-dark'>{profile.country ? profile.country : ''}</span>
             </div>
           </div>
 
-          <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>Communication</label>
-
-            <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>Email, Phone</span>
-            </div>
-          </div>
         </div>
       </div>
     </>

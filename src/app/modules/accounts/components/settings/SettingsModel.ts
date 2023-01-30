@@ -4,12 +4,6 @@ export interface IProfileDetails {
   lName: string
   contactPhone: string
   country: string
-  timeZone: string
-  currency: string
-  communications: {
-    email: boolean
-    phone: boolean
-  }
 }
 
 export interface IUpdateEmail {
@@ -61,14 +55,8 @@ export const profileDetailsInitValues: IProfileDetails = {
   avatar: '/media/avatars/300-1.jpg',
   fName: 'Max',
   lName: 'Smith',
-  contactPhone: '044 3276 454 935',
+  contactPhone: '',
   country: '',
-  timeZone: '',
-  currency: '',
-  communications: {
-    email: false,
-    phone: false,
-  }
 }
 
 export const updateEmail: IUpdateEmail = {

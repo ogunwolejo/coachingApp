@@ -33,3 +33,36 @@ export interface ProfileData {
   emailVerified:boolean;
   role:string
 }
+
+
+export interface AccountData {
+  loading:boolean,
+  error:any,
+  loginCredentials :{
+    email:string;
+    password:string
+  };
+  notifications: {
+    notification: {
+      email:boolean;
+      phone:boolean;
+    };
+    completedProject:{
+      email:boolean;
+      phone:boolean;
+    };
+    billing:{
+      email:boolean;
+      phone:boolean;
+    };
+  }
+}
+
+export interface ProfileUpdate {
+  id:string;
+  //role:string;
+  country:string;
+  phoneNumber:string;
+  fullName:string;
+
+}

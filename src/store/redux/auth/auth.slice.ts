@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import type {PayloadAction} from '@reduxjs/toolkit'
-import {loginUserThunk, registerUserThunk, googleAuthProviderHandlerThunk} from './thunk'
+import {loginUserThunk, registerUserThunk, googleAuthProviderHandlerThunk, adminGoogleAuthProviderHandlerThunk, employeeGoogleAuthProviderHandlerThunk} from './thunk'
 
 interface InitialState {
   loading: boolean
@@ -66,9 +65,41 @@ const AuthSlice = createSlice({
       state.currentUser = action.payload
       state.loading = false
     })
+
+
+    //admin google auth
+    builder.addCase(adminGoogleAuthProviderHandlerThunk.pending, (state, action) => {
+      state.loading = true
+    })
+
+    builder.addCase(adminGoogleAuthProviderHandlerThunk.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+    })
+
+    builder.addCase(adminGoogleAuthProviderHandlerThunk.fulfilled, (state, action) => {
+      state.currentUser = action.payload
+      state.loading = false
+    })
+
+    //employee google auth
+    builder.addCase(employeeGoogleAuthProviderHandlerThunk.pending, (state, action) => {
+      state.loading = true
+    })
+
+    builder.addCase(employeeGoogleAuthProviderHandlerThunk.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload
+    })
+
+    builder.addCase(employeeGoogleAuthProviderHandlerThunk.fulfilled, (state, action) => {
+      state.currentUser = action.payload
+      state.loading = false
+    })
   },
 })
 
+//adminRegisterUserThunk
 export const AuthReducer = AuthSlice.reducer
 
 export const {setUser} = AuthSlice.actions

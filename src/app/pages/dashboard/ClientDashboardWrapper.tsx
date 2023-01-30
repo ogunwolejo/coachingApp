@@ -30,7 +30,7 @@ const ClientDashboardPage: FC = () => {
         <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
           <CardsWidget20
             className='h-md-100 mb-5 mb-xl-10'
-            reference={_currentUser?.uid}
+            reference={_currentUser?.email}
             color='#50CD89'
             name={_currentUser?.displayName}
           />
@@ -53,7 +53,7 @@ const ClientDashboardPage: FC = () => {
         <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
           <CardsWidget7
             className='h-md-100 mb-5 mb-xl-10'
-            subject='Days Count'
+            subject='Business Score'
             value="456"
           />
         </div>
@@ -61,7 +61,7 @@ const ClientDashboardPage: FC = () => {
         <div className='col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10'>
           <CardsWidget7
             className='h-md-100 mb-5 mb-xl-10'
-            subject='Days Count'
+            subject='Leader Score'
             value="456"
           />
         </div>
@@ -87,7 +87,7 @@ const ClientDashboardWrapper: FC = () => {
   const intl = useIntl()
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'DASHBOARD'})}</PageTitle>
       <ClientDashboardPage />
     </>
   )

@@ -59,7 +59,11 @@ const Navbar = () => {
           {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
             <img src={_currentUser?.photoURL} alt='' />
           ) : (
-            <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' />
+            <div className='symbol symbol-35px symbol-circle'>
+                <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                    {_currentUser?.displayName[0]}
+                </span>
+            </div>
           )}
         </div>
         <HeaderUserMenu />

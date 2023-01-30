@@ -1,13 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { ProfileData } from '../../../interface/interface';
-import {getUserProfile} from './profile.thunk'
+import {getUserProfile, updateUserProfile} from './profile.thunk'
 
 interface ProfileInitialState {
     error:any;
     loading:boolean;
-    profile: null | any;
+    profile: null | any
 }
+
 
 const _profileState:ProfileInitialState = {
     error:null,
@@ -40,6 +39,29 @@ const ProfileSlice = createSlice({
                 ...state,
                 loading: false,
                 profile:action.payload
+            }
+        })
+
+        builder.addCase(updateUserProfile.fulfilled, (state, action) => {
+            console.log(action.payload)
+            return {
+                ...state,
+                loading: false,
+            }
+        })
+
+        builder.addCase(updateUserProfile.pending, (state, action) => {
+            return {
+                ...state,
+                loading: true
+            }
+        })
+
+        builder.addCase(updateUserProfile.rejected, (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                error:action.payload
             }
         })
     }

@@ -12,6 +12,7 @@ import {WithChildren} from '../../_metronic/helpers'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserProfile } from '../../store/redux/profile/profile.thunk'
 import { ROLES } from '../../interface/enum'
+import {PulseLoader} from 'react-spinners';
 
 
 const PrivateRoutes = () => {
@@ -25,8 +26,8 @@ const PrivateRoutes = () => {
   const ProjectPage = lazy(() => import('../modules/coaching/CoachPage'))
   const ReportPage = lazy(() => import('../modules/coaching/ReportPage'))
 
-  let role: number = 0; // 0 - client 1 - coach
-  const isClient: boolean = role === 0 ? true : false
+  //let role: number = 0; // 0 - client 1 - coach
+  //const isClient: boolean = role === 0 ? true : false
   const dispatch = useDispatch();
   
   const { loading, error, profile } = useSelector((store: any) => ({
@@ -34,26 +35,33 @@ const PrivateRoutes = () => {
     error: store?.profile.error,
     profile:store?.profile.profile
   }));
-    const {currentUser} = useSelector((store: any) => ({
+
+  const {currentUser} = useSelector((store: any) => ({
     currentUser: store.authReducer.currentUser,
   }))
 
   let _currentUser = JSON.parse(currentUser);
 
-  console.log('prfoile reducer', loading, error, profile);
+  console.log(profile)
 
   useEffect(() => {
-    //@ts-ignore
-    dispatch(getUserProfile(_currentUser.uid))
+
+      const getProfile = async() => {
+        //@ts-ignore
+        await dispatch(getUserProfile(_currentUser.uid))
+      }
+
+      getProfile();
+
   }, [])
 
   return (
-    <Routes>
+    loading ? (<PulseLoader size={15} color="" loading={loading} margin={10}/>) : <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
-        
+
         {profile?.role === ROLES.CLIENT && (
         <>
           <Route path='dashboard' element={<ClientDashboardWrapper />}/>
@@ -83,7 +91,7 @@ const PrivateRoutes = () => {
               </SuspensedView>
             }
           />
-            
+
           <Route
             path='apps/chat/*'
             element={
@@ -107,7 +115,7 @@ const PrivateRoutes = () => {
               </SuspensedView>
             }
           />
-            
+
           <Route
             path='admin/*'
             element={
@@ -116,7 +124,7 @@ const PrivateRoutes = () => {
             </SuspensedView>
             }
           />
-          
+
          <Route
             path='account/*'
             element={
@@ -142,7 +150,7 @@ const PrivateRoutes = () => {
         {(profile?.role === ROLES.COACH || profile?.role === ROLES.SENIORCOACH) && (
           <>
             <Route path='dashboard' element={<DashboardWrapper />}/>
-            
+
             <Route path='coaching'>
               <Route
                 path='projects'
@@ -163,14 +171,14 @@ const PrivateRoutes = () => {
             </Route>
 
             <Route
-              path='report'
+              path='reports'
               element={
                 <SuspensedView>
                   <ReportPage />
                 </SuspensedView>
               }
             />
-            
+
             <Route
               path='account/*'
               element={
@@ -190,18 +198,10 @@ const PrivateRoutes = () => {
             <Route path='*' element={<Navigate to='/error/404' />} />
         </>
         )}
-        
+
 
         <Route path='dashboard' element={<DashboardWrapper />} />
         {/* Lazy Modules */}
-        
-
-        
-
-        
-
-      
-        
       </Route>
     </Routes>
   )
