@@ -2,14 +2,23 @@
 import {FC} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import { setUser } from '../../../../store/redux/auth/auth.slice'
 
 const HeaderUserMenu: FC = () => {
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
   const {currentUser} = useSelector((store: any) => ({
     currentUser: store.auth.currentUser,
   }))
 
+  //navigate('/auth/login')
+  const signoutHandler = () => {
+    localStorage.removeItem('currentUser');
+    dispatch(setUser(null))
+  }
   
   return (
     <div
@@ -52,7 +61,7 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-5 my-1'></div>
 
       <div className='menu-item px-5'>
-        <a onClick={() => navigate('/auth/login')} className='menu-link px-5'>
+        <a onClick={signoutHandler} className='menu-link px-5'>
           Sign Out
         </a>
       </div>
