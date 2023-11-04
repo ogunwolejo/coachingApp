@@ -3,7 +3,6 @@ import {createRoot} from 'react-dom/client'
 import axios from 'axios'
 import {Chart, registerables} from 'chart.js'
 import {QueryClient, QueryClientProvider} from 'react-query'
-import {ReactQueryDevtools} from 'react-query/devtools'
 // Apps
 import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'
 /**
@@ -20,19 +19,6 @@ import { AppRoutes } from './app/routing/AppRoutes'
 import { reduxStore } from './store/redux'
 import { Provider } from 'react-redux';
 
-//import { AuthProvider  } from './app/modules/auth'
-/**
- * Creates `axios-mock-adapter` instance for provided `axios` instance, add
- * basic Metronic mocks and returns it.
- *
- * @see https://github.com/ctimmerm/axios-mock-adapter
- */
-/**
- * Inject Metronic interceptors for axios.
- *
- * @see https://github.com/axios/axios#interceptors
- */
-
 Chart.register(...registerables)
 
 const queryClient = new QueryClient()
@@ -44,9 +30,8 @@ if (container) {
         <MetronicI18nProvider>
             <AppRoutes />
         </MetronicI18nProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      </Provider>
+    </Provider>
   )
 }
 //"homepage": "/metronic8/react/demo1",

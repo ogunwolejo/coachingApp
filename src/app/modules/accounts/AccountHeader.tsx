@@ -10,42 +10,42 @@ const AccountHeader: React.FC = () => {
   const location = useLocation()
 
   const {currentUser} = useSelector((store: any) => ({
-      currentUser: store.authReducer.currentUser,
+      currentUser: store.auth.currentUser,
     }))
 
-    let _currentUser = JSON.parse(currentUser);
+  //let _currentUser = JSON.parse(currentUser);
 
-  const {loading, error, profile} = useSelector((store:any) => ({
-    loading:store?.profile.loading,
-    error:store?.profile.error,
-    profile:store?.profile.profile
-  }))
+  // const {loading, error, profile} = useSelector((store:any) => ({
+  //   loading:store?.profile.loading,
+  //   error:store?.profile.error,
+  //   profile:store?.profile.profile
+  // }))
 
   const profileCompletion = useMemo(() => {
     let profileCompletionCal = 0;
 
-    if(_currentUser.displayName.length > 0) {
+    if(currentUser.user.firstName.length > 0) {
       profileCompletionCal += 25;
     }
 
-    if(_currentUser.email.length > 0) {
+    if(currentUser.user.email.length > 0) {
       profileCompletionCal += 20;
     }
 
-    if(_currentUser.emailVerified) {
+    if(currentUser.user.emailVerified) {
       profileCompletionCal +=5;
     }
 
-    if(profile.phoneNumber && profile.phoneNumber?.length > 0) {
+    if(currentUser.user.phoneNumber.length > 0) {
       profileCompletionCal +=25;
     }
 
-    if(profile.country && profile.country?.length > 0) {
+    if(currentUser.user.lastName.length > 0) {
       profileCompletionCal += 25;
     }
 
     return profileCompletionCal;
-  }, [currentUser, profile])
+  }, [currentUser])
 
 
   return (
@@ -54,17 +54,13 @@ const AccountHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
-              {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
-                <div className='symbol symbol-50px me-5'>
-                  <img alt='' src={_currentUser?.photoURL} />
-                </div>
-              ) : (
+              {currentUser && (
                 <div className='symbol symbol-35px symbol-circle'>
-                  <h3 className='symbol-label bg-primary text-inverse-primary fw-bolder'>
-                    {_currentUser?.displayName[0]}
-                  </h3>
+                  <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                    {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
+                  </span>
                 </div>
-             )}
+              )}
             </div>
           </div>
 
@@ -73,7 +69,7 @@ const AccountHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <div className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    {_currentUser?.displayName}
+                    {currentUser.user.firstName + " " + currentUser.user.lastName}
                   </div>
                 </div>
 
@@ -103,7 +99,7 @@ const AccountHeader: React.FC = () => {
                       path='/media/icons/duotune/communication/com011.svg'
                       className='svg-icon-4 me-1'
                     />
-                    {_currentUser?.email}
+                    {currentUser.user.email}
                   </div>
                 </div>
               </div>

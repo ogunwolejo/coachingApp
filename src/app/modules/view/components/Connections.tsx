@@ -7,11 +7,11 @@ export function Connections() {
     <>
       <div className='d-flex flex-wrap flex-stack mb-6'>
         <h3 className='fw-bolder my-2'>
-          My Contacts
+         Make Connections
           <span className='fs-6 text-gray-400 fw-bold ms-1'>(59)</span>
         </h3>
 
-        <div className='d-flex my-2'>
+        {/* <div className='d-flex my-2'>
           <select
             name='status'
             data-control='select2'
@@ -24,7 +24,7 @@ export function Connections() {
             <option value='Declined'>Declined</option>
             <option value='Accepted'>Accepted</option>
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className='row g-6 g-xl-9'>
@@ -32,7 +32,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-6.jpg'
             name='Emma Smith'
-            job='Art Director'
+            job='Football Director'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -51,7 +51,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-1.jpg'
             name='Max Smith'
-            job='Software Enginer'
+            job='Club President'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -60,7 +60,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-5.jpg'
             name='Sean Bean'
-            job='Web Developer'
+            job='Sport Pundit'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -69,7 +69,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-25.jpg'
             name='Brian Cox'
-            job='UI/UX Designer'
+            job='Coach'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -88,7 +88,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-9.jpg'
             name='Francis Mitcham'
-            job='Software Arcitect'
+            job='Tennis player'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -97,7 +97,7 @@ export function Connections() {
           <Card3
             color='danger'
             name='Olivia Wild'
-            job='System Admin'
+            job='Scout'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
             online={true}
@@ -107,7 +107,7 @@ export function Connections() {
           <Card3
             color='primary'
             name='Neil Owen'
-            job='Account Manager'
+            job='Scout'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
             online={true}
@@ -117,7 +117,7 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-23.jpg'
             name='Dan Wilson'
-            job='Web Desinger'
+            job='Data Analyist'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
@@ -126,7 +126,7 @@ export function Connections() {
           <Card3
             color='danger'
             name='Emma Bold'
-            job='Corporate Finance'
+            job='Set play Coach'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
             online={true}
@@ -136,65 +136,11 @@ export function Connections() {
           <Card3
             avatar='/media/avatars/300-12.jpg'
             name='Ana Crown'
-            job='Customer Relationship'
+            job='Theraphist'
             avgEarnings='$14,560'
             totalEarnings='$236,400'
           />
         </div>
-      </div>
-
-      <div className='d-flex flex-stack flex-wrap pt-10'>
-        <div className='fs-6 fw-bold text-gray-700'>Showing 1 to 10 of 50 entries</div>
-
-        <ul className='pagination'>
-          <li className='page-item previous'>
-            <a href='#' className='page-link'>
-              <i className='previous'></i>
-            </a>
-          </li>
-
-          <li className='page-item active'>
-            <a href='#' className='page-link'>
-              1
-            </a>
-          </li>
-
-          <li className='page-item'>
-            <a href='#' className='page-link'>
-              2
-            </a>
-          </li>
-
-          <li className='page-item'>
-            <a href='#' className='page-link'>
-              3
-            </a>
-          </li>
-
-          <li className='page-item'>
-            <a href='#' className='page-link'>
-              4
-            </a>
-          </li>
-
-          <li className='page-item'>
-            <a href='#' className='page-link'>
-              5
-            </a>
-          </li>
-
-          <li className='page-item'>
-            <a href='#' className='page-link'>
-              6
-            </a>
-          </li>
-
-          <li className='page-item next'>
-            <a href='#' className='page-link'>
-              <i className='next'></i>
-            </a>
-          </li>
-        </ul>
       </div>
     </>
   )

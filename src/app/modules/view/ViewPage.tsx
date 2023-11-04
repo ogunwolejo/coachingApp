@@ -1,10 +1,8 @@
 import {Navigate, Routes, Route, Outlet} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {Discussion} from './components/Discussion'
-import {ActionPoints} from './components/ActionPoints'
-import {Documents} from './components/Documents'
 import {Connections} from './components/Connections'
 import {ProfileHeader} from './ProfileHeader'
+import { Discussion } from './components/Discussion'
 
 const ViewBreadCrumbs: Array<PageLink> = [
   {
@@ -37,24 +35,6 @@ const ViewPage = () => (
           <>
             <PageTitle breadcrumbs={ViewBreadCrumbs}> Discussion</PageTitle>
             <Discussion />
-          </>
-        }
-      />
-      <Route
-        path='action-points'
-        element={
-          <>
-            <PageTitle breadcrumbs={ViewBreadCrumbs}>Action Point</PageTitle>
-            <ActionPoints />
-          </>
-        }
-      />
-      <Route
-        path='documents'
-        element={
-          <>
-            <PageTitle breadcrumbs={ViewBreadCrumbs}>Documents</PageTitle>
-            <Documents />
           </>
         }
       />

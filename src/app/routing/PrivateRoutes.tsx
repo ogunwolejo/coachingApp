@@ -6,6 +6,7 @@ import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
 import {PulseLoader} from 'react-spinners';
 import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper'
+import DiscoveryPage from '../modules/discovery/DiscoveryPage'
 
 
 
@@ -14,8 +15,6 @@ import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper'
 const PrivateRoutes = () => {
   const ViewPage = lazy(() => import('../modules/view/ViewPage')) // profile
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
-  // const CoachingProjects = lazy(() => import('../modules/coaching/Projects'))
-  // const ProjectPage = lazy(() => import('../modules/coaching/CoachPage'))
   
   return (
     // (<PulseLoader size={15} color="" loading={loading} margin={10}/>)  
@@ -34,13 +33,14 @@ const PrivateRoutes = () => {
             }
           />
 
-          {/* <Route
-            path='admin/*'
+          <Route
+            path='discover/*'
             element={
             <SuspensedView>
-              </SuspensedView>
+              <DiscoveryPage/>
+            </SuspensedView>
             }
-          /> */}
+          />
 
          <Route
             path='account/*'

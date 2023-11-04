@@ -18,39 +18,28 @@ const SidebarMenuMain = () => {
       {/***** the dashboard paths for client mode */}
       
         <>
-          {/* <div className='menu-item'>
-            <div className='menu-content pt-8 pb-2'>
-              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>HEAD COACH</span>
-            </div>
-          </div> */}
           <SidebarMenuItem
-            to='/view'
-            icon='/media/icons/duotune/general/gen051.svg'
-            title='view'
+            to='/dashboard'
+            icon='/media/icons/duotune/general/gen001.svg'
+            title='Dashboard'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/project'
-            icon='/media/icons/duotune/general/gen025.svg'
-            title='Projects'
-            fontIcon='bi-layers'
-          />
-          <SidebarMenuItem
-            to='/account'
-            icon='/media/icons/duotune/general/gen010.svg'
+            to='/account/overview'
+            icon='/media/icons/duotune/general/gen003.svg'
             title='Profile'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/statistics'
-            icon='/media/icons/duotune/graphs/gra005.svg'
-            title='Statistics'
+            to='/view'
+            icon='/media/icons/duotune/general/gen006.svg'
+            title='Buddies'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/revenue'
-            icon='/media/icons/duotune/graphs/gra007.svg'
-            title='Revenue'
+            to='/discover'
+            icon='/media/icons/duotune/general/gen004.svg'
+            title='Discover'
             fontIcon='bi-layers'
           />
         </>

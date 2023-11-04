@@ -45,18 +45,6 @@ const Card3: FC<Props> = ({
 
         <div className='fw-bold text-gray-400 mb-6'>{job}</div>
 
-        <div className='d-flex flex-center flex-wrap mb-5'>
-          <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mx-3 mb-3'>
-            <div className='fs-6 fw-bolder text-gray-700'>{avgEarnings}</div>
-            <div className='fw-bold text-gray-400'>Avg. Earnings</div>
-          </div>
-
-          <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 mx-3 px-4 mb-3'>
-            <div className='fs-6 fw-bolder text-gray-700'>{totalEarnings}</div>
-            <div className='fw-bold text-gray-400'>Total Sales</div>
-          </div>
-        </div>
-
         <a href='#' className='btn btn-sm btn-light'>
           <KTSVG path='/media/icons/duotune/arrows/arr075.svg' className='svg-icon-3' />
           Connect

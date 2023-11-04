@@ -1,8 +1,8 @@
 export interface IProfileDetails {
-  avatar: string
-  fName: string
-  lName: string
-  contactPhone: string
+  email: string
+  firstName: string
+  lastName: string
+  phoneNumber: string
   country: string
 }
 
@@ -52,11 +52,11 @@ export interface IDeactivateAccount {
 }
 
 export const profileDetailsInitValues: IProfileDetails = {
-  avatar: '/media/avatars/300-1.jpg',
-  fName: 'Max',
-  lName: 'Smith',
-  contactPhone: '',
+  firstName: 'Max',
+  lastName: 'Smith',
+  phoneNumber: '',
   country: '',
+  email:"2jkjkjk@gmail.com"
 }
 
 export const updateEmail: IUpdateEmail = {

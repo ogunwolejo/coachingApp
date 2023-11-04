@@ -15,59 +15,43 @@ const profileDetailsSchema = Yup.object().shape({
 
 const ProfileDetails: React.FC = () => {
   const dispatch = useDispatch();
-  const {loading, error, profile} = useSelector((store:any) => ({
-    loading:store?.profile.loading,
-    error:store?.profile.error,
-    profile:store?.profile.profile
+
+  const {currentUser, loading} = useSelector((store: any) => ({
+    currentUser: store.auth.currentUser,
+    loading:store.auth.loading
   }))
 
-  const {currentUser} = useSelector((store: any) => ({
-    currentUser: store.authReducer.currentUser,
-  }))
+  // let _currentUser = JSON.parse(currentUser);
+  // const splitDisplayName:string[] = _currentUser.displayName.split(' ');
+  // const fName:string = splitDisplayName[0];
+  // const lName:string = splitDisplayName[1];
+  // const contactPhone:string = _currentUser.providerData[0].phoneNumber;
+  // const country:string = profile.country;
 
-  let _currentUser = JSON.parse(currentUser);
-  const splitDisplayName:string[] = _currentUser.displayName.split(' ');
-  const fName:string = splitDisplayName[0];
-  const lName:string = splitDisplayName[1];
-  const contactPhone:string = _currentUser.providerData[0].phoneNumber;
-  const country:string = profile.country;
-
-  const [data, setData] = useState<IProfileDetails>({
-    avatar: _currentUser?.photoURL,
-    fName,
-    lName,
-    contactPhone:!contactPhone ? '' : contactPhone,
-    country: !country ? '' : country,
-  });
-
-  const updateFirstName = (el:string) => setData(prev => ({...prev, fName:el}));
-  const updateLastName = (el:string) => setData(prev => ({...prev, lName:el}));
-  const updateContactPhone = (el:string) => {
-    console.log('phone Number', typeof el,  el);
-    setData(prev => ({...prev, contactPhone:el}));
+  const initialValues = {
+    firstName:"",
+    lastName:"",
+    phoneNumber:"",
+    email:"",
+    country:""
   }
-  const updateCountry = (el:string) => setData(prev => ({...prev, country:el}));
-
 
   const formik = useFormik<IProfileDetails>({
-    initialValues:data,
+    initialValues,
     validationSchema: profileDetailsSchema,
     onSubmit: async(values) => {
       //setLoading(true)
       //@ts-ignore
       const valuesToUpdate:ProfileUpdate = {
-        fullName: `${values.fName} ${values.lName}`,
-        id:_currentUser.uid,
+        fullName: `${values.firstName} ${values.lastName}`,
+        id:currentUser.user._id,
         country:values.country,
-        phoneNumber:values.contactPhone
+        phoneNumber:currentUser.user.phoneNumber
       }
-      console.log(values.contactPhone, valuesToUpdate);
       //@ts-ignore
       await dispatch(updateUserProfile(valuesToUpdate))
     },
   })
-
-  console.log(_currentUser, profile);
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -95,10 +79,10 @@ const ProfileDetails: React.FC = () => {
                   data-kt-image-input='true'
                   style={{backgroundImage: `url(${toAbsoluteUrl('/media/avatars/blank.png')})`}}
                 >
-                  <div
+                  {/* <div
                     className='image-input-wrapper w-125px h-125px'
                     style={{backgroundImage: `url(${toAbsoluteUrl(data.avatar)})`}}
-                  ></div>
+                  ></div> */}
                 </div>
               </div>
             </div>
@@ -113,13 +97,13 @@ const ProfileDetails: React.FC = () => {
                       type='text'
                       className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
                       placeholder='First name'
-                      {...formik.getFieldProps('fName')}
+                      {...formik.getFieldProps('firstName')}
                       //onChange={(e:any) => updateFirstName(e.target.value)}
                       //value={data.fName}
                     />
-                    {formik.touched.fName && formik.errors.fName && (
+                    {formik.touched.firstName && formik.errors.firstName && (
                       <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.fName}</div>
+                        <div className='fv-help-block'>{formik.errors.firstName}</div>
                       </div>
                     )}
                   </div>
@@ -129,13 +113,13 @@ const ProfileDetails: React.FC = () => {
                       type='text'
                       className='form-control form-control-lg form-control-solid'
                       placeholder='Last name'
-                      {...formik.getFieldProps('lName')}
+                      {...formik.getFieldProps('lastName')}
                       //onChange={(e:any) => updateLastName(e.target.value)}
                       //value={data.lName}
                     />
-                    {formik.touched.lName && formik.errors.lName && (
+                    {formik.touched.lastName && formik.errors.lastName && (
                       <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.lName}</div>
+                        <div className='fv-help-block'>{formik.errors.lastName}</div>
                       </div>
                     )}
                   </div>
@@ -155,13 +139,13 @@ const ProfileDetails: React.FC = () => {
                   type='tel'
                   className='form-control form-control-lg form-control-solid'
                   placeholder='Phone number'
-                  {...formik.getFieldProps('contactPhone')}
+                  {...formik.getFieldProps('phoneNumber')}
                   //onChange={(e:any) => updateContactPhone(e.target.value)}
                   //value={data.contactPhone}
                 />
-                {formik.touched.contactPhone && formik.errors.contactPhone && (
+                {formik.touched.phoneNumber && formik.errors.phoneNumber && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.contactPhone}</div>
+                    <div className='fv-help-block'>{formik.errors.phoneNumber}</div>
                   </div>
                 )}
               </div>

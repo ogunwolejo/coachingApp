@@ -5,19 +5,11 @@ import {useSelector} from "react-redux";
 
 export function Overview() {
 
-  const {loading, error, profile} = useSelector((store:any) => ({
-    loading:store?.profile.loading,
-    error:store?.profile.error,
-    profile:store?.profile.profile
-  }))
-
   const {currentUser} = useSelector((store: any) => ({
-    currentUser: store.authReducer.currentUser,
+    currentUser: store.auth.currentUser,
   }))
 
-  let _currentUser = JSON.parse(currentUser);
-
-
+  
   return (
     <>
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
@@ -36,7 +28,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{_currentUser.displayName}</span>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}</span>
             </div>
           </div>
 
@@ -44,9 +36,9 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>email</label>
 
             <div className='col-lg-8 d-flex align-items-center '>
-              <span className='fw-bolder me-2 fs-6'>{_currentUser.email}</span>
-              {_currentUser.emailVerified && <span className='badge badge-success'>Verified</span>}
-              {!_currentUser.emailVerified && <span className='badge badge-warning'>Not Verified</span>}
+              <span className='fw-bolder me-2 fs-6'>{currentUser.user.email}</span>
+              {currentUser.user.emailVerified && <span className='badge badge-success'>Verified</span>}
+              {!currentUser.user.emailVerified && <span className='badge badge-warning'>Not Verified</span>}
             </div>
           </div>
 
@@ -61,7 +53,7 @@ export function Overview() {
             </label>
 
             <div className='col-lg-8 fv-row'>
-              <span className='fw-bolder fs-6 '>{profile.phoneNumber ? profile.phoneNumber : ''}</span>
+              <span className='fw-bolder fs-6 '>{currentUser.user.phoneNumber ?? ''}</span>
             </div>
           </div>
 
@@ -76,7 +68,7 @@ export function Overview() {
             </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{profile.country ? profile.country : ''}</span>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.country ?? ''}</span>
             </div>
           </div>
 

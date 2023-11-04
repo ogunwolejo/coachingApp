@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   return (
     <div id='kt_app_sidebar' className={clsx('app-sidebar', config.app?.sidebar?.default?.class)}>
-      <SidebarLogo />
+      {/* <SidebarLogo /> */}
       <SidebarMenu />
     </div>
   )

@@ -87,23 +87,6 @@ const ProfileHeader: React.FC = () => {
               </div>
 
             </div>
-
-            <div className='d-flex flex-wrap flex-stack'>
-              
-              <div className='d-flex align-items-center w-200px w-sm-300px flex-column mt-3'>
-                <div className='d-flex justify-content-between w-100 mt-auto mb-2'>
-                  <span className='fw-bold fs-6 text-gray-400'>Progress</span>
-                  <span className='fw-bolder fs-6'>50%</span>
-                </div>
-                <div className='h-5px mx-3 w-100 bg-light mb-3'>
-                  <div
-                    className='bg-success rounded h-5px'
-                    role='progressbar'
-                    style={{width: '50%'}}
-                  ></div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -118,28 +101,6 @@ const ProfileHeader: React.FC = () => {
                 to='/view/discussion'
               >
                 Discussions
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                className={
-                  `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/view/action-points' && 'active')
-                }
-                to='/view/action-points'
-              >
-                Action Points
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                className={
-                  `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/view/documents' && 'active')
-                }
-                to='/view/documents'
-              >
-                Documents
               </Link>
             </li>
             <li className='nav-item'>
