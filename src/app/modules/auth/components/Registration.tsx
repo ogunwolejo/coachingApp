@@ -7,7 +7,6 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
-import { registerUserThunk, googleAuthProviderHandlerThunk } from '../../../../store/redux/auth/thunk'
 import { useDispatch, useSelector } from 'react-redux'
 import { AuthCredentials } from '../../../../interface/interface'
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +17,7 @@ const initialValues = {
   email: '',
   password: '',
   changepassword: '',
-  acceptTerms: false,
+  phoneNumber: '',
 }
 
 const registrationSchema = Yup.object().shape({
@@ -45,7 +44,9 @@ const registrationSchema = Yup.object().shape({
       is: (val: string) => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
     }),
-  acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
+  phoneNumber:Yup.string()
+    .required('phoneNumber is required'),
+
 })
 
 export function Registration() {
@@ -57,13 +58,6 @@ export function Registration() {
   
   const dispatch = useDispatch();
 
-  let { loading, error, currentUser } = auth;
-
-
-
-  const facebookProviderHandler = async () => {
-  }
-
 
   const formik = useFormik({
     initialValues,
@@ -74,12 +68,10 @@ export function Registration() {
           email: values.email,
           password:values.password,
           firstName:values.firstname,
-          lastName:values.lastname
+          lastName:values.lastname,
+          phoneNumber:values.phoneNumber
         };
         
-        //@ts-ignore
-        await dispatch(registerUserThunk(credential));
-        //console.log(reg);
         navigate('/auth/check-email');
 
       } catch (error) {
@@ -104,64 +96,10 @@ export function Registration() {
         {/* begin::Title */}
         <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
         {/* end::Title */}
-
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
       </div>
       {/* end::Heading */}
 
-      {/* begin::Login options */}
-      <div className='row g-3 mb-9'>
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            //href='javascript::void(0)'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-               onClick={async() => {
-                //@ts-ignore
-                await dispatch(googleAuthProviderHandlerThunk({})) 
-            }}
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-              className='h-15px me-3'
-            />
-            Sign in with Google
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
-
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            onClick={facebookProviderHandler}
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/facebook-4.svg')}
-              className='theme-light-show h-15px me-3'
-            />
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/facebook-1.svg')}
-              className='theme-dark-show h-15px me-3'
-            />
-            Sign in with Facebook
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
-      </div>
-      {/* end::Login options */}
-
-      <div className='separator separator-content my-14'>
-        <span className='w-125px text-gray-500 fw-semibold fs-7'>Or with email</span>
-      </div>
-
+      
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
@@ -249,6 +187,32 @@ export function Registration() {
       </div>
       {/* end::Form group */}
 
+      {/* begin::Form group PhoneNumber */}
+      <div className='fv-row mb-8'>
+        <label className='form-label fw-bolder text-dark fs-6'>Mobile Number</label>
+        <input
+          placeholder='mobile number'
+          type='tel'
+          autoComplete='off'
+          {...formik.getFieldProps('phoneNumber')}
+          className={clsx(
+            'form-control bg-transparent',
+            {'is-invalid': formik.touched.phoneNumber && formik.errors.phoneNumber},
+            {
+              'is-valid': formik.touched.phoneNumber && !formik.errors.phoneNumber,
+            }
+          )}
+        />
+        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.phoneNumber}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      {/* end::Form group */}
+
       {/* begin::Form group Password */}
       <div className='fv-row mb-8' data-kt-password-meter='true'>
         <div className='mb-1'>
@@ -324,7 +288,7 @@ export function Registration() {
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-8'>
+      {/* <div className='fv-row mb-8'>
         <label className='form-check form-check-inline' htmlFor='kt_login_toc_agree'>
           <input
             className='form-check-input'
@@ -351,7 +315,7 @@ export function Registration() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
       {/* end::Form group */}
 
       {/* begin::Form group */}
@@ -360,15 +324,14 @@ export function Registration() {
           type='submit'
           id='kt_sign_up_submit'
           className='btn btn-lg btn-primary w-100 mb-5'
-          disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
+          disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Submit</span>}
-          {loading && (
-            <span className='indicator-progress' style={{display: 'block'}}>
+          <span className='indicator-label'>Submit</span>
+          
+            {/* <span className='indicator-progress' style={{display: 'block'}}>
               Please wait...{' '}
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-            </span>
-          )}
+            </span> */}
         </button>
         <Link to='/auth/login'>
           <button

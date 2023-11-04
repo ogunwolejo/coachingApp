@@ -1,50 +1,25 @@
 import clsx from 'clsx'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {HeaderUserMenu, ThemeModeSwitcher, HeaderNotificationsMenu} from '../../../partials'
+import {HeaderUserMenu, ThemeModeSwitcher} from '../../../partials'
 import {useLayout} from '../../core'
 import {useSelector} from 'react-redux'
 
-const itemClass = 'ms-1 ms-lg-3'
-const btnClass =
+// constants string class
+const itemClass:string = 'ms-1 ms-lg-3'
+const btnClass:string =
   'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px'
-const userAvatarClass = 'symbol-35px symbol-md-40px'
-const btnIconClass = 'svg-icon-1'
+const userAvatarClass:string = 'symbol-35px symbol-md-40px'
+const btnIconClass:string = 'svg-icon-1'
 
 const Navbar = () => {
   const {config} = useLayout()
 
   const {currentUser} = useSelector((store: any) => ({
-    currentUser: store.authReducer.currentUser,
+    currentUser: store.auth.currentUser,
   }))
-
-  let _currentUser = JSON.parse(currentUser)
 
   return (
     <div className='app-navbar flex-shrink-0'>
-      {/*isClient === 0 && (<div className={clsx('app-navbar-item', itemClass)}>
-        <div id='kt_activities_toggle' className={btnClass}>
-          <KTSVG path='/media/icons/duotune/general/gen032.svg' className={btnIconClass} />
-        </div>
-  </div>)*/}
-      <div className={clsx('app-navbar-item', itemClass)}>
-        <div
-          data-kt-menu-trigger="{default: 'click'}"
-          data-kt-menu-attach='parent'
-          data-kt-menu-placement='bottom-end'
-          className={btnClass}
-        >
-          <KTSVG path='/media/icons/duotune/general/gen022.svg' className={btnIconClass} />
-        </div>
-        <HeaderNotificationsMenu />
-      </div>
-
-      <div className={clsx('app-navbar-item', itemClass)}>
-        <div className={clsx('position-relative', btnClass)} id='kt_drawer_chat_toggle'>
-          <KTSVG path='/media/icons/duotune/communication/com012.svg' className={btnIconClass} />
-          <span className='bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink' />
-        </div>
-      </div>
-
       <div className={clsx('app-navbar-item', itemClass)}>
         <ThemeModeSwitcher toggleBtnClass={clsx('btn-active-light-primary btn-custom')} />
       </div>
@@ -56,17 +31,15 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
-            <img src={_currentUser?.photoURL} alt='' />
-          ) : (
+          {currentUser && (
             <div className='symbol symbol-35px symbol-circle'>
-                <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
-                    {_currentUser?.displayName[0]}
-                </span>
+              <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
+              </span>
             </div>
           )}
         </div>
-        <HeaderUserMenu />
+        {currentUser && <HeaderUserMenu />}
       </div>
 
       {config.app?.header?.default?.menu?.display && (

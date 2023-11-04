@@ -3,18 +3,18 @@ export interface AuthCredentials {
   password: string
   firstName: string
   lastName: string
+  phoneNumber: string
 }
 
 export interface LoginCredentials {
-  email: string
-  password: string
+  email?: string
+  password?: string
+  phoneNumber?: string
+
 }
 
 export interface ResetPassword {
   email: string
-  actionCode: any
-  continueUrl: string
-  lang: string
 }
 
 export interface LocalStorageData {

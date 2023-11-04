@@ -5,89 +5,28 @@ import {KTSVG} from '../../../../helpers'
 import {SidebarMenuItemWithSub} from './SidebarMenuItemWithSub'
 import {SidebarMenuItem} from './SidebarMenuItem'
 import {useSelector} from 'react-redux'
-import {ROLES} from '../../../../../interface/enum'
 import {BeatLoader} from 'react-spinners'
 
 const SidebarMenuMain = () => {
-  const intl = useIntl()
-
-  const { loading, error, profile } = useSelector((store: any) => ({
-      loading: store?.profile.loading,
-      error: store?.profile.error,
-      profile:store?.profile.profile
-    }));
-
   return (
     <>
-      <BeatLoader
+      {/* <BeatLoader
        color={'#FFF'}
        loading={loading}
        size={10}
-      />
+      /> */}
       {/***** the dashboard paths for client mode */}
-      {profile?.role === ROLES.CLIENT && (
+      
         <>
-          <SidebarMenuItem
-            to='/dashboard'
-            icon='/media/icons/duotune/art/art002.svg'
-            title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
-            fontIcon='bi-app-indicator'
-          />
-
-          <div className='menu-item'>
-            <div className='menu-content pt-8 pb-2'>
-              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Client</span>
-            </div>
-          </div>
-          <SidebarMenuItemWithSub
-            to='/crafted/pages'
-            title='Page'
-            fontIcon='bi-archive'
-            icon='/media/icons/duotune/general/gen022.svg'
-          >
-            <SidebarMenuItemWithSub to='/view' title='My View' hasBullet={false}>
-              <SidebarMenuItem
-                to='/view/discussion'
-                title='History Of Discussions'
-                hasBullet={true}
-              />
-              <SidebarMenuItem to='/view/action-points' title='Action Points' hasBullet={true} />
-              <SidebarMenuItem to='/view/documents' title='Documents' hasBullet={true} />
-              <SidebarMenuItem to='/view/connections' title='Connections' hasBullet={true} />
-            </SidebarMenuItemWithSub>
-          </SidebarMenuItemWithSub>
-
-          <SidebarMenuItem
-            to='/payment'
-            title='Payment'
-            fontIcon='bi-payment'
-            icon='/media/icons/duotune/communication/com006.svg'
-          />
-
-          <SidebarMenuItemWithSub
-            to='/accounts'
-            title='Accounts'
-            icon='/media/icons/duotune/communication/com006.svg'
-            fontIcon='bi-person'
-          >
-            <SidebarMenuItem to='/account/overview' title='Overview' hasBullet={true} />
-            <SidebarMenuItem to='/account/settings' title='Settings' hasBullet={true} />
-          </SidebarMenuItemWithSub>
-        </>
-      )}
-
-      {/*** the dashboard paths for head coach  */}
-      {profile?.role === ROLES.HEADCOACH && (
-        <>
-          <div className='menu-item'>
+          {/* <div className='menu-item'>
             <div className='menu-content pt-8 pb-2'>
               <span className='menu-section text-muted text-uppercase fs-8 ls-1'>HEAD COACH</span>
             </div>
-          </div>
+          </div> */}
           <SidebarMenuItem
-            to='/project-management/projects'
+            to='/view'
             icon='/media/icons/duotune/general/gen051.svg'
-            title='Project Management'
+            title='view'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
@@ -97,9 +36,9 @@ const SidebarMenuMain = () => {
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
-            to='/admin/employees'
+            to='/account'
             icon='/media/icons/duotune/general/gen010.svg'
-            title='Employees'
+            title='Profile'
             fontIcon='bi-layers'
           />
           <SidebarMenuItem
@@ -115,50 +54,7 @@ const SidebarMenuMain = () => {
             fontIcon='bi-layers'
           />
         </>
-      )}
 
-      {/*** the dashboard paths for coach both junior and senior  */}
-      {(profile?.role === ROLES.COACH || profile?.role === ROLES.SENIORCOACH) && (
-        <>
-          <div className='menu-item'>
-            <div className='menu-content pt-8 pb-2'>
-              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>COACH</span>
-            </div>
-          </div>
-          <SidebarMenuItem
-            to='/coaching/projects'
-            icon='/media/icons/duotune/general/gen051.svg'
-            title='Project Supervising'
-            fontIcon='bi-layers'
-          />
-          <SidebarMenuItem
-            to='/reports'
-            icon='/media/icons/duotune/general/gen052.svg'
-            title='Report'
-            fontIcon='bi-layers'
-          />
-        </>
-      )}
-
-
-      {!loading && (
-      <>
-       {/** general paths for mode */}
-        <div className='menu-item'>
-            <div className='menu-content pt-8 pb-2'>
-            <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Chats</span>
-            </div>
-      </div>
-      <SidebarMenuItemWithSub
-        to='/apps/chat'
-        title='Chat'
-        fontIcon='bi-chat-left'
-        icon='/media/icons/duotune/communication/com012.svg'
-      >
-      <SidebarMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
-      </SidebarMenuItemWithSub>
-      </>
-      )}
     </>
   )
 }

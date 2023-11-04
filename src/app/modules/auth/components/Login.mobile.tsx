@@ -13,23 +13,15 @@ import { ThunkDispatch } from '@reduxjs/toolkit'
 import { clearError } from '../../../../store/redux/auth/auth.slice'
 
 const loginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
-  password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
+  phoneNumber: Yup.string()
     .required('Password is required'),
 })
 
 const initialValues = {
-  email: '',
-  password: '',
+  phoneNumber:''
 }
 
-export function Login() {
+export function LoginByMobile() {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigate = useNavigate()
 
@@ -45,12 +37,10 @@ export function Login() {
     validationSchema: loginSchema,
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       const credentials: LoginCredentials = {
-        email: values.email,
-        password: values.password
+        phoneNumber: values.phoneNumber
       }
-      await dispatch(AuthThunk.loginThunk(credentials))
-      //dispatch(clearError({}))
-      //navigate('/dashboard')
+      await dispatch(AuthThunk.loginViaMobileThunk(credentials))
+      
     },
   })
 
@@ -63,56 +53,31 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-11'>
-        <h1 className='text-gray-700 fw-bolder mb-3'>Sign In</h1>
+        <h1 className='text-gray-700 fw-bolder mb-3 text-captialize'>Sign In With Mobile Number</h1>
       </div>
       {/* begin::Heading */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-8'>
-        <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
-        <input
-          placeholder='Email'
-          {...formik.getFieldProps('email')}
-          className={clsx(
-            'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email || error},
-            {
-              'is-valid': formik.touched.email && !formik.errors.email,
-            }
-          )}
-          type='email'
-          name='email'
-          autoComplete='off'
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className='fv-plugins-message-container'>
-            <span role='alert'>{formik.errors.email}</span>
-          </div>
-        )}
-      </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group */}
       <div className='fv-row mb-3'>
-        <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
+        <label className='form-label fw-bolder text-dark fs-6 mb-0'>Mobile number</label>
         <input
-          type='password'
+          type='tel'
           autoComplete='off'
-          {...formik.getFieldProps('password')}
+          {...formik.getFieldProps('phoneNumber')}
           className={clsx(
             'form-control bg-transparent',
             {
-              'is-invalid': formik.touched.password && formik.errors.password || error,
+              'is-invalid': formik.touched.phoneNumber && formik.errors.phoneNumber || error,
             },
             {
-              'is-valid': formik.touched.password && !formik.errors.password,
+              'is-valid': formik.touched.phoneNumber && !formik.errors.phoneNumber,
             }
           )}
         />
-        {formik.touched.password && formik.errors.password && (
+        {formik.touched.phoneNumber && formik.errors.phoneNumber && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
-              <span role='alert'>{formik.errors.password}</span>
+              <span role='alert'>{formik.errors.phoneNumber}</span>
             </div>
           </div>
         )}
@@ -131,8 +96,8 @@ export function Login() {
 
       {/* begin::Wrapper */}
       <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-        <Link to='/auth/login-mobile' className='link-primary'>
-          Login via mobile number
+        <Link to='/auth/login' className='link-primary'>
+          Login via email and password
         </Link>
       <div/>
 

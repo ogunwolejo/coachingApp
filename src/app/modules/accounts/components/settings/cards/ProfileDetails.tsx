@@ -4,7 +4,6 @@ import {IProfileDetails} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {useDispatch, useSelector} from "react-redux";
-import {updateUserProfile} from "../../../../../../store/redux/profile/profile.thunk";
 import {ProfileUpdate} from "../../../../../../interface/interface";
 
 const profileDetailsSchema = Yup.object().shape({

@@ -11,11 +11,10 @@ const ProfileHeader: React.FC = () => {
 
 
   const {currentUser} = useSelector((store: any) => ({
-    currentUser: store.authReducer.currentUser,
+    currentUser: store.auth.currentUser,
   }))
 
-  let _currentUser = JSON.parse(currentUser);
-
+  
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -23,14 +22,16 @@ const ProfileHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-100px symbol-fixed position-relative'>
-              {_currentUser?.photoURL !== null && _currentUser?.photoURL?.length > 0 ? (
-                  <div className='symbol symbol-50px me-5'>
-                    <img alt='' src={_currentUser?.photoURL} />
+              {currentUser ? (
+                  <div className='symbol symbol-35px symbol-circle'>
+                    <h3 className='symbol-label bg-primary text-inverse-primary fw-bolder'>
+                      {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
+                    </h3>
                   </div>
                 ) : (
                   <div className='symbol symbol-35px symbol-circle'>
                     <h3 className='symbol-label bg-primary text-inverse-primary fw-bolder'>
-                      {_currentUser?.displayName[0]}
+                      O
                     </h3>
                   </div>
                )}
@@ -42,7 +43,7 @@ const ProfileHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <div  className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    {_currentUser?.displayName}
+                    {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
                   </div>
                   <a href='#'>
                     <KTSVG
@@ -80,7 +81,7 @@ const ProfileHeader: React.FC = () => {
                       path='/media/icons/duotune/communication/com011.svg'
                       className='svg-icon-4 me-1'
                     />
-                    {_currentUser?.email}
+                    {currentUser.user.email}
                   </div>
                 </div>
               </div>

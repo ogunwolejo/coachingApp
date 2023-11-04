@@ -8,7 +8,7 @@ import {AccountHeader} from './AccountHeader'
 const accountBreadCrumbs: Array<PageLink> = [
   {
     title: 'Account',
-    path: 'account/overview',
+    path: '/account/overview',
     isSeparator: false,
     isActive: false,
   },

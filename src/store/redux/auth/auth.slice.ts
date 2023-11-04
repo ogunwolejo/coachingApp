@@ -1,10 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {loginUserThunk, registerUserThunk, googleAuthProviderHandlerThunk, adminGoogleAuthProviderHandlerThunk, employeeGoogleAuthProviderHandlerThunk} from './thunk'
+import AuthThunk from './thunk'
+import { ICurrentUser } from '../../../interface/store.interface'
 
 interface InitialState {
   loading: boolean
   error: null | any
-  currentUser: any | null
+  currentUser: ICurrentUser | null
 }
 
 const _: InitialState = {
@@ -18,88 +19,85 @@ const AuthSlice = createSlice({
   initialState: _,
   reducers: {
     setUser: (state, action) => {
-      state.currentUser = action.payload
+      return {
+        ...state,
+        currentUser:action.payload
+      }
     },
+    clearError:(state, action) => {
+      return {
+        ...state,
+        error:null
+      }
+    } 
   },
-  extraReducers: (builder) => {
-    // login users
-    builder.addCase(loginUserThunk.pending, (state, action) => {
-      state.loading = true
+  extraReducers(builder) {
+    //LOGIN
+    /*** by email and password */
+    builder.addCase(AuthThunk.loginThunk.pending, (state, action) => {
+      return {
+        ...state,
+        loading:true
+      }
     })
+    builder.addCase(AuthThunk.loginThunk.fulfilled, (state, action) => {
+      //console.log(action)
+      if(action.payload.error) {
+        return {
+          ...state,
+          loading:false,
+          error: action.payload.error
+        }
+      }
 
-    builder.addCase(loginUserThunk.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
+      return {
+        ...state,
+        loading:false,
+        currentUser:action.payload.data,
+        error:null
+      }      
     })
+    builder.addCase(AuthThunk.loginThunk.rejected, (state, action) => {
+      return {
+        ...state,
+        loading:false
+      }
+    }) 
 
-    builder.addCase(loginUserThunk.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      state.loading = false
+    /*** by phone number */
+    builder.addCase(AuthThunk.loginViaMobileThunk.pending, (state, action) => {
+      return {
+        ...state,
+        loading:true
+      }
     })
+    builder.addCase(AuthThunk.loginViaMobileThunk.fulfilled, (state, action) => {
+      //console.log(action)
+      if(action.payload.error) {
+        return {
+          ...state,
+          loading:false,
+          error: action.payload.error
+        }
+      }
 
-    // register new users
-    builder.addCase(registerUserThunk.pending, (state, action) => {
-      state.loading = true
+      return {
+        ...state,
+        loading:false,
+        currentUser:action.payload.data,
+        error:null
+      }      
     })
-
-    builder.addCase(registerUserThunk.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    })
-
-    builder.addCase(registerUserThunk.fulfilled, (state, action) => {
-      state.loading = false
-    })
-
-    //google auth
-    builder.addCase(googleAuthProviderHandlerThunk.pending, (state, action) => {
-      state.loading = true
-    })
-
-    builder.addCase(googleAuthProviderHandlerThunk.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    })
-
-    builder.addCase(googleAuthProviderHandlerThunk.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      state.loading = false
-    })
-
-
-    //admin google auth
-    builder.addCase(adminGoogleAuthProviderHandlerThunk.pending, (state, action) => {
-      state.loading = true
-    })
-
-    builder.addCase(adminGoogleAuthProviderHandlerThunk.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    })
-
-    builder.addCase(adminGoogleAuthProviderHandlerThunk.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      state.loading = false
-    })
-
-    //employee google auth
-    builder.addCase(employeeGoogleAuthProviderHandlerThunk.pending, (state, action) => {
-      state.loading = true
-    })
-
-    builder.addCase(employeeGoogleAuthProviderHandlerThunk.rejected, (state, action) => {
-      state.loading = false
-      state.error = action.payload
-    })
-
-    builder.addCase(employeeGoogleAuthProviderHandlerThunk.fulfilled, (state, action) => {
-      state.currentUser = action.payload
-      state.loading = false
-    })
+    builder.addCase(AuthThunk.loginViaMobileThunk.rejected, (state, action) => {
+      return {
+        ...state,
+        loading:false
+      }
+    }) 
   },
 })
 
 //adminRegisterUserThunk
 export const AuthReducer = AuthSlice.reducer
 
-export const {setUser} = AuthSlice.actions
+export const {setUser,clearError} = AuthSlice.actions
