@@ -28,7 +28,7 @@ export function Overview() {
             <label className='col-lg-4 fw-bold text-muted'>Full Name</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}</span>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.firstName + " " + currentUser.user.lastName}</span>
             </div>
           </div>
 
@@ -59,16 +59,16 @@ export function Overview() {
 
           <div className='row mb-7'>
             <label className='col-lg-4 fw-bold text-muted'>
-              Country
+              Sport Interest
               <i
                 className='fas fa-exclamation-circle ms-1 fs-7'
                 data-bs-toggle='tooltip'
-                title='Country of origination'
+                title='Sport interest'
               ></i>
             </label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.country ?? ''}</span>
+              <span className='fw-bolder fs-6 text-dark'>{currentUser.user.interest ?? ''}</span>
             </div>
           </div>
 

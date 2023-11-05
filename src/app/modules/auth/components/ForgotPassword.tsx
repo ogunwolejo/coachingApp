@@ -1,8 +1,11 @@
 import {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useFormik} from 'formik'
+import { useDispatch } from 'react-redux'
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import AuthThunk from '../../../../store/redux/auth/thunk'
 
 const initialValues = {
   email: 'admin@demo.com',
@@ -19,25 +22,26 @@ const forgotPasswordSchema = Yup.object().shape({
 export function ForgotPassword() {
   const [loading, setLoading] = useState(false)
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
+  const [errors, setError] = useState<string>('')
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const navigate = useNavigate()
+  
   const formik = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchema,
-    onSubmit: (values, {setStatus, setSubmitting}) => {
+    onSubmit: async(values, {setStatus, setSubmitting}) => {
       setLoading(true)
-      setHasErrors(undefined)
-      /*setTimeout(() => {
-        requestPassword(values.email)
-          .then(({data: {result}}) => {
-            setHasErrors(false)
-            setLoading(false)
-          })
-          .catch(() => {
-            setHasErrors(true)
-            setLoading(false)
-            setSubmitting(false)
-            setStatus('The login detail is incorrect')
-          })
-      }, 1000)*/
+      const isEmailVerified = await dispatch(AuthThunk.verifyEmailThunk({email:values.email}))
+      
+      if(isEmailVerified.payload.error) {
+        setError(isEmailVerified.payload.error)
+        setLoading(false)
+      } else {
+        setError('')
+        navigate('/auth/check-email')
+        setLoading(false)
+      }
+      
     },
   })
 
@@ -99,13 +103,22 @@ export function ForgotPassword() {
             </div>
           </div>
         )}
+
+        {  errors && (
+          <div className='fv-plugins-message-container mt-5 mb-10'>
+            <div className='fv-help-block'>
+              <span role='alert'>{errors}</span>
+            </div>
+          </div>
+          )
+        }
       </div>
       {/* end::Form group */}
 
       {/* begin::Form group */}
       <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
         <button type='submit' id='kt_password_reset_submit' className='btn btn-primary me-4'>
-          <span className='indicator-label'>Submit</span>
+          {!loading && <span className='indicator-label'>Submit</span>}
           {loading && (
             <span className='indicator-progress'>
               Please wait...

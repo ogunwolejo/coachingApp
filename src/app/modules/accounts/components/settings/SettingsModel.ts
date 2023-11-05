@@ -1,9 +1,9 @@
 export interface IProfileDetails {
-  email: string
+  //email: string
   firstName: string
   lastName: string
   phoneNumber: string
-  country: string
+  //country: string
 }
 
 export interface IUpdateEmail {
@@ -52,12 +52,9 @@ export interface IDeactivateAccount {
 }
 
 export const profileDetailsInitValues: IProfileDetails = {
-  firstName: 'Max',
-  lastName: 'Smith',
-  phoneNumber: '',
-  country: '',
-  email:"2jkjkjk@gmail.com"
-}
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',}
 
 export const updateEmail: IUpdateEmail = {
   newEmail: 'support@keenthemes.com',

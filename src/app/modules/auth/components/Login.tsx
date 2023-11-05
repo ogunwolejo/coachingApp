@@ -131,13 +131,13 @@ export function Login() {
 
       {/* begin::Wrapper */}
       <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
-        <Link to='/auth/login-mobile' className='link-primary'>
+        <Link to='/auth/login-mobile' onClick={() => dispatch(clearError(null))} className='link-primary'>
           Login via mobile number
         </Link>
       <div/>
 
         {/* begin::Link */}
-        <Link to='/auth/forgot-password' className='link-primary'>
+        <Link to='/auth/forgot-password' onClick={() => dispatch(clearError(null))} className='link-primary'>
           Forgot Password ?
         </Link>
         {/* end::Link */}
@@ -165,7 +165,7 @@ export function Login() {
 
       <div className='text-gray-500 text-center fw-semibold fs-6'>
         Not a Member yet?{' '}
-        <Link to='/auth/registration' className='link-primary'>
+        <Link to='/auth/registration' onClick={() => dispatch(clearError(null))} className='link-primary'>
           Sign up
         </Link>
       </div>

@@ -4,6 +4,11 @@ import {KTSVG} from '../../../../../../_metronic/helpers'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {IUpdatePassword, IUpdateEmail, updatePassword, updateEmail} from '../SettingsModel'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { Thunk } from 'yup/lib/util/types'
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import AuthThunk from '../../../../../../store/redux/auth/thunk'
 
 const emailFormValidationSchema = Yup.object().shape({
   newEmail: Yup.string()
@@ -34,43 +39,82 @@ const passwordFormValidationSchema = Yup.object().shape({
 })
 
 const SignInMethod: React.FC = () => {
-  const [emailUpdateData, setEmailUpdateData] = useState<IUpdateEmail>(updateEmail)
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const {currentUser} = useSelector((store: any) => ({
+    currentUser: store.auth.currentUser,
+  }))
+
+  const [emailUpdateData, setEmailUpdateData] = useState<IUpdateEmail>({
+    newEmail:currentUser.user.email || '',
+    confirmPassword:''
+  })
   const [passwordUpdateData, setPasswordUpdateData] = useState<IUpdatePassword>(updatePassword)
 
   const [showEmailForm, setShowEmailForm] = useState<boolean>(false)
   const [showPasswordForm, setPasswordForm] = useState<boolean>(false)
 
   const [loading1, setLoading1] = useState(false)
+  const [error, setError] = useState<string>('')
 
   const formik1 = useFormik<IUpdateEmail>({
     initialValues: {
       ...emailUpdateData,
     },
     validationSchema: emailFormValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       setLoading1(true)
-      setTimeout((values) => {
-        setEmailUpdateData(values)
+      setEmailUpdateData(values)
+
+      const changeEmail = await dispatch(AuthThunk.updateEmailThunk({
+        newEmail:values.newEmail,
+        password:values.confirmPassword,
+        token:currentUser.token
+      }))
+
+      if(changeEmail.payload.error) {
+        setError(changeEmail.payload.error)
         setLoading1(false)
-        setShowEmailForm(false)
-      }, 1000)
+        return
+      }
+
+      //console.log('==>', changeEmail)
+      if(!changeEmail.payload.error) {
+        setError('')
+        setLoading1(false)
+        return   
+      }
+
     },
   })
 
   const [loading2, setLoading2] = useState(false)
+  const [error2, setError2] = useState<string>('')
 
   const formik2 = useFormik<IUpdatePassword>({
     initialValues: {
       ...passwordUpdateData,
     },
     validationSchema: passwordFormValidationSchema,
-    onSubmit: (values) => {
-      setLoading2(true)
-      setTimeout((values) => {
-        setPasswordUpdateData(values)
-        setLoading2(false)
-        setPasswordForm(false)
-      }, 1000)
+    onSubmit: async(values) => {
+      setLoading2(true)    
+        const changePassword = await dispatch(AuthThunk.updatePasswordThunk({
+          password:values.newPassword,
+          token:currentUser.token,
+          oldPassword:values.currentPassword
+        }))
+        
+        // setPasswordUpdateData(values)
+        if(changePassword.payload.error) {
+          setError2(changePassword.payload.error)
+          setLoading2(false)
+          return
+        }
+
+        if(!changePassword.payload.error) {
+          setError2('')
+          setLoading2(false)
+          return 
+        }
     },
   })
 
@@ -92,7 +136,7 @@ const SignInMethod: React.FC = () => {
           <div className='d-flex flex-wrap align-items-center'>
             <div id='kt_signin_email' className={' ' + (showEmailForm && 'd-none')}>
               <div className='fs-6 fw-bolder mb-1'>Email Address</div>
-              <div className='fw-bold text-gray-600'>support@keenthemes.com</div>
+              <div className='fw-bold text-gray-600'>{currentUser.user.email}</div>
             </div>
 
             <div
@@ -146,7 +190,18 @@ const SignInMethod: React.FC = () => {
                       )}
                     </div>
                   </div>
+
+                  {
+                    error && (
+                      <div className='fv-plugins-message-container mt-5'>
+                        <div className='fv-help-block'>
+                          <span role='alert'>{error}</span>
+                        </div>
+                      </div>
+                    )
+                  }
                 </div>
+
                 <div className='d-flex'>
                   <button
                     id='kt_signin_submit'
@@ -174,6 +229,8 @@ const SignInMethod: React.FC = () => {
                 </div>
               </form>
             </div>
+
+
 
             <div id='kt_signin_email_button' className={'ms-auto ' + (showEmailForm && 'd-none')}>
               <button

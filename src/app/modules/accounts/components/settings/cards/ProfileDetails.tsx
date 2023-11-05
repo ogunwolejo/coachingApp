@@ -16,40 +16,26 @@ const profileDetailsSchema = Yup.object().shape({
 const ProfileDetails: React.FC = () => {
   const dispatch = useDispatch();
 
-  const {currentUser, loading} = useSelector((store: any) => ({
+  const {currentUser} = useSelector((store: any) => ({
     currentUser: store.auth.currentUser,
-    loading:store.auth.loading
   }))
 
-  // let _currentUser = JSON.parse(currentUser);
-  // const splitDisplayName:string[] = _currentUser.displayName.split(' ');
-  // const fName:string = splitDisplayName[0];
-  // const lName:string = splitDisplayName[1];
-  // const contactPhone:string = _currentUser.providerData[0].phoneNumber;
-  // const country:string = profile.country;
+  const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
-    firstName:"",
-    lastName:"",
-    phoneNumber:"",
-    email:"",
-    country:""
+    firstName:currentUser.user.firstName,
+    lastName:currentUser.user.lastName,
+    phoneNumber:currentUser.user.phoneNumber,
   }
 
   const formik = useFormik<IProfileDetails>({
     initialValues,
     validationSchema: profileDetailsSchema,
     onSubmit: async(values) => {
-      //setLoading(true)
+      setLoading(true)
+      console.log(values)
       //@ts-ignore
-      const valuesToUpdate:ProfileUpdate = {
-        fullName: `${values.firstName} ${values.lastName}`,
-        id:currentUser.user._id,
-        country:values.country,
-        phoneNumber:currentUser.user.phoneNumber
-      }
-      //@ts-ignore
-      await dispatch(updateUserProfile(valuesToUpdate))
+      //await dispatch(updateUserProfile(valuesToUpdate))
     },
   })
 
@@ -69,7 +55,7 @@ const ProfileDetails: React.FC = () => {
       </div>
 
       <div id='kt_account_profile_details' className='collapse show'>
-        <form onSubmit={formik.handleSubmit} noValidate className='form'>
+        <form onSubmit={formik.handleSubmit} id='kt_update_profile' noValidate className='form'>
           <div className='card-body border-top p-9'>
             <div className='row mb-6'>
               <label className='col-lg-4 col-form-label fw-bold fs-6'>Avatar</label>
@@ -79,10 +65,10 @@ const ProfileDetails: React.FC = () => {
                   data-kt-image-input='true'
                   style={{backgroundImage: `url(${toAbsoluteUrl('/media/avatars/blank.png')})`}}
                 >
-                  {/* <div
+                  <div
                     className='image-input-wrapper w-125px h-125px'
-                    style={{backgroundImage: `url(${toAbsoluteUrl(data.avatar)})`}}
-                  ></div> */}
+                    style={{backgroundImage: `url(${toAbsoluteUrl('/media/avatars/300-1.jpg')})`}}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -150,64 +136,12 @@ const ProfileDetails: React.FC = () => {
                 )}
               </div>
             </div>
-
-            
-
-            <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                <span className='required'>Country</span>
-              </label>
-
-              <div className='col-lg-8 fv-row'>
-                <select
-                  className='form-select form-select-solid form-select-lg fw-bold'
-                  {...formik.getFieldProps('country')}
-                  //value={data.country}
-                >
-                  <option value=''>Select a Country...</option>
-                  <option value='AF'>Afghanistan</option>
-                  <option value='AX'>Aland Islands</option>
-                  <option value='AL'>Albania</option>
-                  <option value='DZ'>Algeria</option>
-                </select>
-                {formik.touched.country && formik.errors.country && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.country}</div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-
-
-            {/*<div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Time Zone</label>
-
-              <div className='col-lg-8 fv-row'>
-                <select
-                  className='form-select form-select-solid form-select-lg'
-                  {...formik.getFieldProps('timeZone')}
-                >
-                  <option value=''>Select a Timezone..</option>
-                  <option value='International Date Line West'>
-                    (GMT-11:00) International Date Line West
-                  </option>
-                  <option value='Midway Island'>(GMT-11:00) Midway Island</option>
-                  
-                </select>
-                {formik.touched.timeZone && formik.errors.timeZone && (
-                  <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.timeZone}</div>
-                  </div>
-                )}
-              </div>
-            </div>*/}
-
-
           </div>
 
-          <div className='card-footer d-flex justify-content-end py-6 px-9'>
-            <button type='submit' className='btn btn-primary' disabled={loading}>
+          {/* <div className='card-footer d-flex justify-content-end py-6 px-9'>
+            <button type='submit' id='kt_update_profile' className='btn btn-primary' disabled={formik.isSubmitting || !formik.isValid} 
+            // disabled={loading}
+            >
               {!loading && 'Save Changes'}
               {loading && (
                 <span className='indicator-progress' style={{display: 'block'}}>
@@ -216,7 +150,7 @@ const ProfileDetails: React.FC = () => {
                 </span>
               )}
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

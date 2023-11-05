@@ -93,7 +93,39 @@ const AuthSlice = createSlice({
         ...state,
         loading:false
       }
-    }) 
+    })
+    
+    //REGISTERATION
+    // builder.addCase(AuthThunk.signupThunk.pending, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading:true
+    //   }
+    // })
+    // builder.addCase(AuthThunk.signupThunk.fulfilled, (state, action) => {
+    //   console.log(action)
+    //   if(action.payload.error) {
+    //     return {
+    //       ...state,
+    //       loading:false,
+    //       error: action.payload.error
+    //     }
+    //   }
+
+    //   return {
+    //     ...state,
+    //     loading:false,
+    //     currentUser:action.payload.data,
+    //     error:null
+    //   }      
+    // })
+    // builder.addCase(AuthThunk.signupThunk.rejected, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading:false
+    //   }
+    // })
+
   },
 })
 

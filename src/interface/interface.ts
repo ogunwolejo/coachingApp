@@ -4,6 +4,7 @@ export interface AuthCredentials {
   firstName: string
   lastName: string
   phoneNumber: string
+  interest:string
 }
 
 export interface LoginCredentials {
@@ -26,7 +27,8 @@ export interface LocalStorageData {
 
 export interface ProfileData {
   id:string;
-  fullName:string;
+  firstName:string;
+  lastName:string;
   avatar:string;
   phoneContact:null | string;
   email:string;
@@ -63,6 +65,7 @@ export interface ProfileUpdate {
   //role:string;
   country:string;
   phoneNumber:string;
-  fullName:string;
+  firstName:string;
+  lastName:string;
 
 }

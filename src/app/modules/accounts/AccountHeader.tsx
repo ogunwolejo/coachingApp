@@ -13,14 +13,6 @@ const AccountHeader: React.FC = () => {
       currentUser: store.auth.currentUser,
     }))
 
-  //let _currentUser = JSON.parse(currentUser);
-
-  // const {loading, error, profile} = useSelector((store:any) => ({
-  //   loading:store?.profile.loading,
-  //   error:store?.profile.error,
-  //   profile:store?.profile.profile
-  // }))
-
   const profileCompletion = useMemo(() => {
     let profileCompletionCal = 0;
 
@@ -75,24 +67,6 @@ const AccountHeader: React.FC = () => {
 
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
                   <div
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
-                  >
-                    <KTSVG
-                      path='/media/icons/duotune/communication/com006.svg'
-                      className='svg-icon-4 me-1'
-                    />
-                    Developer
-                  </div>
-                  <div
-                    className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
-                  >
-                    <KTSVG
-                      path='/media/icons/duotune/general/gen018.svg'
-                      className='svg-icon-4 me-1'
-                    />
-                    SF, Bay Area
-                  </div>
-                  <div
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
                     <KTSVG
@@ -106,21 +80,7 @@ const AccountHeader: React.FC = () => {
               
             </div>
 
-            <div className='d-flex flex-wrap flex-stack'>
-              <div className='d-flex align-items-center w-200px w-sm-300px flex-column mt-3'>
-                <div className='d-flex justify-content-between w-100 mt-auto mb-2'>
-                  <span className='fw-bold fs-6 text-gray-400'>Profile Compleation</span>
-                  <span className='fw-bolder fs-6'>{profileCompletion}%</span>
-                </div>
-                <div className='h-5px mx-3 w-100 bg-light mb-3'>
-                  <div
-                    className='bg-success rounded h-5px'
-                    role='progressbar'
-                    style={{width: `${profileCompletion}%`}}
-                  ></div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
 
