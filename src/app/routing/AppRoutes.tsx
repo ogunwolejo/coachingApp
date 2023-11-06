@@ -1,10 +1,3 @@
-/**
- * High level router.
- *
- * Note: It's recommended to compose related routes in internal router
- * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
- */
-
 import {FC, useEffect, useLayoutEffect, useMemo} from 'react'
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {PrivateRoutes} from './PrivateRoutes'
@@ -15,48 +8,49 @@ import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash';
 import { ThunkDispatch, current } from '@reduxjs/toolkit'
 import { clearError, setUser } from '../../store/redux/auth/auth.slice'
-const {PUBLIC_URL} = process.env
+import AuthThunk from '../../store/redux/auth/thunk'
+import {BarLoader, CircleLoader} from 'react-spinners'
+
 
 const AppRoutes: FC = () => {
   
   const dispatch = useDispatch<ThunkDispatch<any,any, any>>()
-  const {currentUser} = useSelector((store:any) => ({
-    currentUser:store.auth.currentUser
+  
+  const {isAuth, loading} = useSelector((store:any) => ({
+    isAuth:store.auth.isAuth,
+    loading:store.auth.loading
   }))
 
-  if(currentUser) {
-    localStorage.setItem('token', currentUser.token)
-    localStorage.setItem('currentUser', JSON.stringify(currentUser))
-  }
-
-  useEffect(() => {
-    const userExist:string | null = localStorage.getItem('currentUser')
-    let storedCurrentUser:string | null = localStorage.getItem('currentUser')
-    if(storedCurrentUser) {
-      storedCurrentUser = JSON.parse(storedCurrentUser)
-      dispatch(setUser(storedCurrentUser))
-    }
-
-    dispatch(clearError({}))
-  }, [])
-
-  //  // Memoize the value of the currentUser state variable.
-   const memoizedCurrentUser = useMemo(() => currentUser, [currentUser]);
-
-   // Use the useLayoutEffect hook to render the PrivateRoute component before the page layout is painted.
+  
+   // Use the useLayoutEffect hook to render the PrivateRoute component before the page layout is painted
+   const fetch = async(token:string) => {
+      try {
+        await dispatch(AuthThunk.authByTokenThunk({token}))
+      } catch (error) {
+        console.error(error)
+      }
+   } 
+   
    useLayoutEffect(() => {
-     dispatch(clearError({}));
-   }, [dispatch, memoizedCurrentUser]);
+      if(isAuth) {
+        return 
+      }
+      // when it is undefined
+      const userExist:string | null = localStorage.getItem('token')
+      if(userExist) {
+        fetch(userExist)
+      }
+   }, [isAuth]);
 
   
 
   return (
-    <BrowserRouter /*basename={PUBLIC_URL}*/>
+      <BrowserRouter /*basename={PUBLIC_URL}*/>
       <Routes>
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
-          {currentUser ? (
+          {isAuth ? (
             <>
               <Route path='/*' element={<PrivateRoutes />} />
               {<Route index element={<Navigate to='/dashboard' />} />}
@@ -70,6 +64,7 @@ const AppRoutes: FC = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    
   )
 }
 

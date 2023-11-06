@@ -5,13 +5,15 @@ import { ICurrentUser } from '../../../interface/store.interface'
 interface InitialState {
   loading: boolean
   error: null | any
-  currentUser: ICurrentUser | null
+  currentUser: ICurrentUser | null,
+  isAuth: ICurrentUser | null,
 }
 
 const _: InitialState = {
   loading: false,
   error: null,
   currentUser: null,
+  isAuth:null
 }
 
 const AuthSlice = createSlice({
@@ -21,7 +23,8 @@ const AuthSlice = createSlice({
     setUser: (state, action) => {
       return {
         ...state,
-        currentUser:action.payload
+        currentUser:action.payload, 
+        isAuth:action.payload
       }
     },
     clearError:(state, action) => {
@@ -50,10 +53,12 @@ const AuthSlice = createSlice({
         }
       }
 
+      localStorage.setItem('token', action.payload.data.token)
       return {
         ...state,
         loading:false,
         currentUser:action.payload.data,
+        isAuth:action.payload.data,
         error:null
       }      
     })
@@ -81,10 +86,12 @@ const AuthSlice = createSlice({
         }
       }
 
+      localStorage.setItem('token', action.payload.data.token)
       return {
         ...state,
         loading:false,
         currentUser:action.payload.data,
+        isAuth:action.payload.data,
         error:null
       }      
     })
@@ -94,37 +101,73 @@ const AuthSlice = createSlice({
         loading:false
       }
     })
-    
-    //REGISTERATION
-    // builder.addCase(AuthThunk.signupThunk.pending, (state, action) => {
-    //   return {
-    //     ...state,
-    //     loading:true
-    //   }
-    // })
-    // builder.addCase(AuthThunk.signupThunk.fulfilled, (state, action) => {
-    //   console.log(action)
-    //   if(action.payload.error) {
-    //     return {
-    //       ...state,
-    //       loading:false,
-    //       error: action.payload.error
-    //     }
-    //   }
 
-    //   return {
-    //     ...state,
-    //     loading:false,
-    //     currentUser:action.payload.data,
-    //     error:null
-    //   }      
-    // })
-    // builder.addCase(AuthThunk.signupThunk.rejected, (state, action) => {
-    //   return {
-    //     ...state,
-    //     loading:false
-    //   }
-    // })
+
+    // update email
+    /*** by phone number */
+    builder.addCase(AuthThunk.updateEmailThunk.pending, (state, action) => {
+      return {
+        ...state,
+        loading:true
+      }
+    })
+    builder.addCase(AuthThunk.updateEmailThunk.fulfilled, (state, action) => {
+      if(action.payload.error) {
+        return {
+          ...state,
+        }
+      }
+
+      //console.log(action.payload)
+
+      return {
+        ...state,
+        currentUser:{
+          ...state.currentUser,
+          user: action.payload.data.user
+        },
+        loading:false,
+        error:null
+      }      
+    })
+    builder.addCase(AuthThunk.updateEmailThunk.rejected, (state, action) => {
+      return {
+        ...state,
+        loading:false
+      }
+    })
+
+    //by tokem
+    builder.addCase(AuthThunk.authByTokenThunk.pending, (state, action) => {
+      return {
+        ...state,
+        loading:true
+      }
+    })
+    builder.addCase(AuthThunk.authByTokenThunk.fulfilled, (state, action) => {
+      console.log(action)
+      if(action.payload.error) {
+        return {
+          ...state,
+          loading:false,
+          error: action.payload.error
+        }
+      }
+
+      return {
+        ...state,
+        loading:false,
+        currentUser:action.payload.data,
+        isAuth:action.payload.data,
+        error:null
+      }      
+    })
+    builder.addCase(AuthThunk.authByTokenThunk.rejected, (state, action) => {
+      return {
+        ...state,
+        loading:false
+      }
+    })
 
   },
 })

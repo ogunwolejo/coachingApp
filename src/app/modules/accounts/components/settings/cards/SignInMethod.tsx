@@ -68,7 +68,7 @@ const SignInMethod: React.FC = () => {
       const changeEmail = await dispatch(AuthThunk.updateEmailThunk({
         newEmail:values.newEmail,
         password:values.confirmPassword,
-        token:currentUser.token
+        token:localStorage.getItem('token')
       }))
 
       if(changeEmail.payload.error) {
@@ -99,7 +99,7 @@ const SignInMethod: React.FC = () => {
       setLoading2(true)    
         const changePassword = await dispatch(AuthThunk.updatePasswordThunk({
           password:values.newPassword,
-          token:currentUser.token,
+          token:localStorage.getItem('token'),
           oldPassword:values.currentPassword
         }))
         

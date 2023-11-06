@@ -96,7 +96,7 @@ const changePasswordThunk = createAsyncThunk('changePassword', async(data:{token
 })
 
 
-const updateEmailThunk = createAsyncThunk('updateEmail', async(data:{newEmail:string; password:string; token:string}) => {
+const updateEmailThunk = createAsyncThunk('updateEmail', async(data:{newEmail:string; password:string; token:string|null}) => {
     const env = useEnv()
     try {
         const changePass = await Axios.post(`${env?.url}auth/update-email`, {
@@ -118,7 +118,7 @@ const updateEmailThunk = createAsyncThunk('updateEmail', async(data:{newEmail:st
 
 
 
-const updatePasswordThunk = createAsyncThunk('updatPassword', async(data:{password:string; token:string; oldPassword:string}) => {
+const updatePasswordThunk = createAsyncThunk('updatPassword', async(data:{password:string; token:string|null; oldPassword:string}) => {
     const env = useEnv()
     try {
         const changePass = await Axios.post(`${env?.url}auth/update-password`, {
@@ -126,6 +126,21 @@ const updatePasswordThunk = createAsyncThunk('updatPassword', async(data:{passwo
                 password:data.password,
                 oldPassword:data.oldPassword
             },
+            Headers:{
+                Authorization: 'Bearer ' + data.token
+            }
+        })
+        return changePass.data
+    } catch (error:any) {
+        return error.response.data        
+    }
+})
+
+
+const authByTokenThunk = createAsyncThunk('authByToken', async(data:{token:string;}) => {
+    const env = useEnv()
+    try {
+        const changePass = await Axios.post(`${env?.url}auth`, {
             Headers:{
                 Authorization: 'Bearer ' + data.token
             }
@@ -146,7 +161,8 @@ const AuthThunk = {
     verifyUserAccountThunk,
     changePasswordThunk,
     updateEmailThunk,
-    updatePasswordThunk
+    updatePasswordThunk,
+    authByTokenThunk
 }
 
 export default AuthThunk

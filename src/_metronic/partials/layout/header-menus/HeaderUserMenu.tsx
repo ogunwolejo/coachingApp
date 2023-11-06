@@ -14,9 +14,8 @@ const HeaderUserMenu: FC = () => {
     currentUser: store.auth.currentUser,
   }))
 
-  //navigate('/auth/login')
   const signoutHandler = () => {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     dispatch(setUser(null))
   }
   
@@ -30,7 +29,7 @@ const HeaderUserMenu: FC = () => {
           {currentUser ? (
               <div className='symbol symbol-35px symbol-circle'>
                 <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
-                  {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
+                  {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0] }
                 </span>
               </div>
             ) : (

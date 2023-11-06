@@ -14,8 +14,9 @@ const btnIconClass:string = 'svg-icon-1'
 const Navbar = () => {
   const {config} = useLayout()
 
-  const {currentUser} = useSelector((store: any) => ({
+  const {currentUser, loading} = useSelector((store: any) => ({
     currentUser: store.auth.currentUser,
+    loading:store.auth.loading
   }))
 
   return (
@@ -31,15 +32,15 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          {currentUser && (
+          {(currentUser && !loading) && (
             <div className='symbol symbol-35px symbol-circle'>
               <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
-                {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0]}
+                {currentUser.user.firstName[0] + "" + currentUser.user.lastName[0] }
               </span>
             </div>
           )}
         </div>
-        {currentUser && <HeaderUserMenu />}
+        {(currentUser && !loading) && <HeaderUserMenu />}
       </div>
     </div>
   )

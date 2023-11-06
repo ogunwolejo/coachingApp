@@ -4,9 +4,10 @@ import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
-import {PulseLoader} from 'react-spinners';
+import {CircleLoader, PulseLoader} from 'react-spinners';
 import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper'
 import DiscoveryPage from '../modules/discovery/DiscoveryPage'
+import { useSelector } from 'react-redux'
 
 
 
@@ -15,9 +16,14 @@ import DiscoveryPage from '../modules/discovery/DiscoveryPage'
 const PrivateRoutes = () => {
   const ViewPage = lazy(() => import('../modules/view/ViewPage')) // profile
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
+
+  const {isAuth, loading} = useSelector((store:any) => ({
+    isAuth:store.auth.isAuth,
+    loading:store.auth.loading
+  }))
   
   return (
-    // (<PulseLoader size={15} color="" loading={loading} margin={10}/>)  
+    loading ? < CircleLoader/> :   
     <Routes>
       <Route element={<MasterLayout />}>
         {/* Redirect to Dashboard after success login/registartion */}
